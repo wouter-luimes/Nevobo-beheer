@@ -1,0 +1,17 @@
+{
+  "name": "nevobo-beheer",
+  "version": "1.0.0",
+  "description": "=== Nevobo team- en competitiebeheer === Contributors: Wouter Luimes Donate link: https://www.wouterluimes.nl Tags: comments, spam Requires at least: 3.0.1 Tested up to: 3.4 Stable tag: 4.3 License: GPLv2 or later License URI: http://www.gnu.org/licenses/gpl-2.0.html",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "wp-scripts build --webpack-src-dir=./gutenberg/src --output-path=./gutenberg/build",
+    "start": "wp-scripts build --webpack-src-dir=./gutenberg/src --output-path=./gutenberg/build --watch"
+  },
+  "keywords": [],
+  "author": "Wouter Luimes",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^26.2.0"
+  }
+}
