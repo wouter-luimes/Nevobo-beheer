@@ -101,34 +101,22 @@ class Nevobo_Beheer
 	 */
 	private function load_dependencies()
 	{
-		/**
-		 * The class responsible for orchestrating the actions and filters of the core plugin.
-		 */
+		// The class responsible for orchestrating the actions and filters of the core plugin.
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-nevobo-beheer-loader.php';
 
-		/**
-		 * The class responsible for defining internationalization functionality of the plugin.
-		 */
+		// The class responsible for defining internationalization functionality of the plugin.
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-nevobo-beheer-i18n.php';
 
-		/**
-		 * The class responsible for defining all object type actions that occur.
-		 */
+		// The class responsible for defining all object type actions that occur.
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-nevobo-beheer-objects.php';
 
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
+		// The class responsible for defining all actions that occur in the admin area.
 		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-nevobo-beheer-admin.php';
 
-		/**
-		 * The class responsible for defining all actions that occur in the Gutenberg editor.
-		 */
+		// The class responsible for defining all actions that occur in the Gutenberg editor.
 		require_once plugin_dir_path(dirname(__FILE__)) . 'gutenberg/class-nevobo-beheer-gutenberg.php';
 
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing side of the site.
-		 */
+		// The class responsible for defining all actions that occur in the public-facing side of the site.
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-nevobo-beheer-public.php';
 
 		$this->loader = new Nevobo_Beheer_Loader();
@@ -182,21 +170,28 @@ class Nevobo_Beheer
 	{
 		$plugin_admin = new Nevobo_Beheer_Admin($this->get_plugin_slug(), $this->get_version());
 
+		// register custom admin menu pages
+		$this->loader->add_action('admin_menu', $plugin_admin, 'add_custom_menu_pages');
+		// register custom admin submenu pages
+		$this->loader->add_action('admin_menu', $plugin_admin, 'add_custom_submenu_pages');
+ 
+		// register custom settings
+		$this->loader->add_action('admin_menu', $plugin_admin, 'register_custom_settings');
+		// add custom settings sections
+		$this->loader->add_action('admin_menu', $plugin_admin, 'add_custom_settings_sections');
+		// add custom settings fields
+		$this->loader->add_action('admin_menu', $plugin_admin, 'add_custom_settings_fields');
+		
 		// sets the column headings displayed in the Nevobo Teams post-type admin list table
 		$this->loader->add_filter('manage_nevobo-team_posts_columns', $plugin_admin, 'set_nevobo_teams_column_headings');
-
 		// sets the column cells displayed in the Nevobo Teams post-type admin list table
 		$this->loader->add_action('manage_nevobo-team_posts_custom_column', $plugin_admin, 'set_custom_post_column_cells', 10, 2);
-
 		// makes the column headings displayed in a specific custom post-type admin list table sortable
 		$this->loader->add_filter('manage_edit-nevobo-team_sortable_columns', $plugin_admin, 'set_custom_post_sortable_columns');
-
 		// removes the ‘Months’ drop-down from the admin post list table
 		$this->loader->add_filter('disable_months_dropdown', $plugin_admin, 'disable_custom_post_months_dropdown', 10, 2);
-
 		// adds custom filter dropdowns to the admin post list table.
 		$this->loader->add_action('restrict_manage_posts', $plugin_admin, 'add_custom_post_filter_dropdown', 10, 2);
-
 		// sets custom orderby query parameters when ordering based on custom meta-data in the admin list table
 		$this->loader->add_action('pre_get_posts', $plugin_admin, 'set_custom_post_columns_order');
 

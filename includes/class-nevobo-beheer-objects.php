@@ -119,7 +119,7 @@ class Nevobo_Beheer_Objects
                     // 'rest_base' => '',
                     // 'rest_namespace' => 'wp/v2',
                     // 'rest_controller_class' => 'WP_REST_Posts_Controller',
-                    // 'menu_position' => null,
+                    'menu_position' => 30,
                     'menu_icon' => 'dashicons-groups',
                     // 'capability_type' => 'post',
                     // 'capabilities' => [],
@@ -140,9 +140,178 @@ class Nevobo_Beheer_Objects
                 )
             ),
             /**
-         * To do: Nevobo result, programme and competition custom post types
-         */
-            // array(),
+             * The Nevobo programme custom post-type
+             */
+            array(
+                'post_type' => 'nevobo-programme',
+                'args' => array(
+                    'label' => __('Programma\'s', $this->plugin_slug),
+                    'labels' => array(
+                        'name' => __('Programma\'s', $this->plugin_slug),
+                        'singular_name' => __('Programma', $this->plugin_slug),
+                        'add_new' => __('Nieuw programma', $this->plugin_slug),
+                        'add_new_item' => __('Nieuw programma toevoegen', $this->plugin_slug),
+                        'edit_item' => __('Programma bewerken', $this->plugin_slug),
+                        'new_item' => __('Nieuw programma', $this->plugin_slug),
+                        'view_item' => __('Programma bekijken', $this->plugin_slug),
+                        'view_items' => __('Programma\'s bekijken', $this->plugin_slug),
+                        'search_items' => __('Programma\'s zoeken', $this->plugin_slug),
+                        'not_found' => __('Geen programma gevonden.', $this->plugin_slug),
+                        'not_found_in_trash' => __('Geen programma\'s gevonden in de prullenbak.', $this->plugin_slug),
+                        'parent_item_colon' => __('Hoofdprogramma', $this->plugin_slug), // not used
+                        'all_items' => __('Programma', $this->plugin_slug), // Alle programma\'s
+                        'archives' => __('Programma-archief', $this->plugin_slug),
+                        'attributes' => __('Programma-attributen', $this->plugin_slug),
+                        'insert_into_item' => __('In programma invoegen', $this->plugin_slug),
+                        'uploaded_to_this_item' => __('Geüpload naar dit programma', $this->plugin_slug),
+                        // 'featured_image' => __('Uitgelichte afbeelding', $this->plugin_slug),
+                        // 'set_featured_image' => __('Uitgelichte afbeelding kiezen', $this->plugin_slug),
+                        // 'remove_featured_image' => __('Uitgelichte afbeelding verwijderen', $this->plugin_slug),
+                        // 'use_featured_image' => __('Als uitgelichte afbeelding gebruiken', $this->plugin_slug),
+                        // 'menu_name' => __('Teams', $this->plugin_slug), // same as name
+                        'filter_items_list' => __('Programmalijst filteren', $this->plugin_slug),
+                        // 'filter_by_date' => __('Op datum filteren', $this->plugin_slug),
+                        'items_list_navigation' => __('Programmalijst-navigatie', $this->plugin_slug),
+                        'items_list' => __('Programmalijst', $this->plugin_slug),
+                        'item_published' => __('Programma gepubliceerd.', $this->plugin_slug),
+                        'item_published_privately' => __('Programma privé gepubliceerd.', $this->plugin_slug),
+                        'item_reverted_to_draft' => __('Team teruggezet naar concept.', $this->plugin_slug),
+                        'item_scheduled' => __('Programma gepland.', $this->plugin_slug),
+                        'item_updated' => __('Programma geüpdatet.', $this->plugin_slug),
+                        'item_link' => __('Programmalink', $this->plugin_slug),
+                        'item_link_description' => __('Een link naar een programma.', $this->plugin_slug),
+                    ),
+                    'description' => __('Het Nevobo-programma custom post-type', $this->plugin_slug),
+                    'public' => true,
+                    'hierarchical' => false,
+                    'exclude_from_search' => false,
+                    'publicly_queryable' => true,
+                    'show_ui' => true,
+                    'show_in_menu' => 'nevobo-competition',
+                    // 'show_in_nav_menus' => true,
+                    // 'show_in_admin_bar' => true,
+                    'show_in_rest' => true,
+                    // 'rest_base' => '',
+                    // 'rest_namespace' => 'wp/v2',
+                    // 'rest_controller_class' => 'WP_REST_Posts_Controller',
+                    // 'menu_position' => null,
+                    // 'menu_icon' => '',
+                    // 'capability_type' => 'post',
+                    'capabilities' => array(
+                        'edit_post' => 'do_not_allow',
+                        'read_post' => 'edit_posts',
+                        'delete_post' => 'do_not_allow',
+                        'edit_posts' => 'edit_posts',
+                        'edit_others_posts' => 'do_not_allow',
+                        'delete_posts' => 'do_not_allow',
+                        'publish_posts' => 'do_not_allow',
+                        'read_private_posts' => 'do_not_allow',
+                        'create_posts' => 'do_not_allow',
+                    ),
+                    // 'map_meta_cap' => false,
+                    'supports' => array('title', 'custom-fields'),
+                    // 'register_meta_box_cb' => function(){},
+                    'taxonomies' => array('nevobo-match-type'),
+                    'has_archive' => false,
+                    'rewrite' => array(
+                        'slug' => 'programma',
+                        'feeds' => true,
+                    ),
+                    // 'query_var' => '',
+                    'can_export' => true,
+                    'delete_with_user' => false,
+                    // 'template' => [],
+                    // 'template_lock' => false,
+                )
+            ),
+            /**
+             * The Nevobo result custom post-type
+             */
+            array(
+                'post_type' => 'nevobo-result',
+                'args' => array(
+                    'label' => __('Resultaten', $this->plugin_slug),
+                    'labels' => array(
+                        'name' => __('Resultaten', $this->plugin_slug),
+                        'singular_name' => __('Resultaat', $this->plugin_slug),
+                        'add_new' => __('Nieuw resultaat', $this->plugin_slug),
+                        'add_new_item' => __('Nieuw resultaat toevoegen', $this->plugin_slug),
+                        'edit_item' => __('Resultaat bewerken', $this->plugin_slug),
+                        'new_item' => __('Nieuw resultaat', $this->plugin_slug),
+                        'view_item' => __('Resultaat bekijken', $this->plugin_slug),
+                        'view_items' => __('Resultaten bekijken', $this->plugin_slug),
+                        'search_items' => __('Resultaat zoeken', $this->plugin_slug),
+                        'not_found' => __('Geen resultaat gevonden.', $this->plugin_slug),
+                        'not_found_in_trash' => __('Geen resultaten gevonden in de prullenbak.', $this->plugin_slug),
+                        'parent_item_colon' => __('Hoofdresultaat', $this->plugin_slug), // not used
+                        'all_items' => __('Resultaten', $this->plugin_slug), // Alle Resultaten
+                        'archives' => __('Resultaatarchief', $this->plugin_slug),
+                        'attributes' => __('Resultaatattributen', $this->plugin_slug),
+                        'insert_into_item' => __('In resultaat invoegen', $this->plugin_slug),
+                        'uploaded_to_this_item' => __('Geüpload naar dit resultaat', $this->plugin_slug),
+                        // 'featured_image' => __('Uitgelichte afbeelding', $this->plugin_slug),
+                        // 'set_featured_image' => __('Uitgelichte afbeelding kiezen', $this->plugin_slug),
+                        // 'remove_featured_image' => __('Uitgelichte afbeelding verwijderen', $this->plugin_slug),
+                        // 'use_featured_image' => __('Als uitgelichte afbeelding gebruiken', $this->plugin_slug),
+                        // 'menu_name' => __('Teams', $this->plugin_slug), // same as name
+                        'filter_items_list' => __('Resultaatlijst filteren', $this->plugin_slug),
+                        // 'filter_by_date' => __('Op datum filteren', $this->plugin_slug),
+                        'items_list_navigation' => __('Resultaatlijst-navigatie', $this->plugin_slug),
+                        'items_list' => __('Resultaatlijst', $this->plugin_slug),
+                        'item_published' => __('Resultaat gepubliceerd.', $this->plugin_slug),
+                        'item_published_privately' => __('Resultaat privé gepubliceerd.', $this->plugin_slug),
+                        'item_reverted_to_draft' => __('Resultaat teruggezet naar concept.', $this->plugin_slug),
+                        'item_scheduled' => __('Resultaat gepland.', $this->plugin_slug),
+                        'item_updated' => __('Resultaat geüpdatet.', $this->plugin_slug),
+                        'item_link' => __('Resultaatlink', $this->plugin_slug),
+                        'item_link_description' => __('Een link naar een resultaat.', $this->plugin_slug),
+                    ),
+                    'description' => __('Het Nevobo-resultaat custom post-type', $this->plugin_slug),
+                    'public' => true,
+                    'hierarchical' => false,
+                    'exclude_from_search' => false,
+                    'publicly_queryable' => true,
+                    'show_ui' => true,
+                    'show_in_menu' => 'nevobo-competition',
+                    // 'show_in_nav_menus' => true,
+                    // 'show_in_admin_bar' => true,
+                    'show_in_rest' => true,
+                    // 'rest_base' => '',
+                    // 'rest_namespace' => 'wp/v2',
+                    // 'rest_controller_class' => 'WP_REST_Posts_Controller',
+                    // 'menu_position' => null,
+                    // 'menu_icon' => '',
+                    // 'capability_type' => 'post',
+                    'capabilities' => array(
+                        'edit_post' => 'do_not_allow',
+                        'read_post' => 'edit_posts',
+                        'delete_post' => 'do_not_allow',
+                        'edit_posts' => 'edit_posts',
+                        'edit_others_posts' => 'do_not_allow',
+                        'delete_posts' => 'do_not_allow',
+                        'publish_posts' => 'do_not_allow',
+                        'read_private_posts' => 'do_not_allow',
+                        'create_posts' => 'do_not_allow',
+                    ),
+                    // 'map_meta_cap' => false,
+                    'supports' => array('title', 'custom-fields'),
+                    // 'register_meta_box_cb' => function(){},
+                    'taxonomies' => array('nevobo-match-type'),
+                    'has_archive' => false,
+                    'rewrite' => array(
+                        'slug' => 'resultaat',
+                        'feeds' => true,
+                    ),
+                    // 'query_var' => '',
+                    'can_export' => true,
+                    'delete_with_user' => false,
+                    // 'template' => [],
+                    // 'template_lock' => false,
+                )
+            ),
+            /**
+            * To do: Nevobo competition custom post types
+            */
         );
 
         /**
@@ -203,8 +372,8 @@ class Nevobo_Beheer_Objects
                 ),
             ),
             /**
-         * To do: Nevobo competition pool(s) 
-         */
+             * To do: add meta keys for the Nevobo programme and results post types
+             */
         );
 
         /**
@@ -307,8 +476,8 @@ class Nevobo_Beheer_Objects
                 )
             ),
             /**
-         * To do: Nevobo match status custom post type
-         */
+            * To do: Nevobo match status custom post type
+            */
             // array(),
         );
 
@@ -337,7 +506,7 @@ class Nevobo_Beheer_Objects
          */
         $term_meta_keys = array(
             /**
-             * Team type afkorting (HS, DS, MA, JC, N6)
+             * Team type afkorting
              */
             array(
                 'taxonomy' => 'nevobo-team-category',
@@ -380,7 +549,7 @@ class Nevobo_Beheer_Objects
          */
         $terms = array(
             /**
-             * The Nevobo-team category custom terms
+             * The Nevobo team category custom terms
              */
             array(
                 'taxonomy' => 'nevobo-team-category',
@@ -415,6 +584,9 @@ class Nevobo_Beheer_Objects
                         'slug' => 'jeugd',
                         'name' => __('Jeugd', $this->plugin_slug),
                         'children' => array(
+                            /**
+                             * Jeugd A
+                             */
                             array(
                                 'slug' => 'jeugd-a',
                                 'name' => __('Jeugd A', $this->plugin_slug),
@@ -442,6 +614,9 @@ class Nevobo_Beheer_Objects
                                     ),
                                 )
                             ),
+                            /**
+                             * Jeugd B
+                             */
                             array(
                                 'slug' => 'jeugd-b',
                                 'name' => __('Jeugd B', $this->plugin_slug),
@@ -469,6 +644,9 @@ class Nevobo_Beheer_Objects
                                     ),
                                 )
                             ),
+                            /**
+                             * Jeugd C
+                             */
                             array(
                                 'slug' => 'jeugd-c',
                                 'name' => __('Jeugd C', $this->plugin_slug),
@@ -595,91 +773,94 @@ class Nevobo_Beheer_Objects
                             ),
                         )
                     ),
-                    /**
-                     * Masters
-                     */
-                    array(
-                        'slug' => 'master',
-                        'name' => __('Master', $this->plugin_slug),
-                        'children' => array(
-                            array(
-                                'slug' => 'dames-master',
-                                'name' => __('Dames Master', $this->plugin_slug),
-                                'meta' => array(
-                                    'nevobo-team-type' => 'DM',
-                                ),
-                            ),
-                            array(
-                                'slug' => 'heren-master',
-                                'name' => __('Heren Master', $this->plugin_slug),
-                                'meta' => array(
-                                    'nevobo-team-type' => 'HM',
-                                ),
-                            ),
-                            array(
-                                'slug' => 'mix-master',
-                                'name' => __('Mix Master', $this->plugin_slug),
-                                'meta' => array(
-                                    'nevobo-team-type' => 'XM',
-                                ),
-                            ),
-                        )
-                    ),
-                    /** 
-                     * Zitvolleybal
-                     */
-                    array(
-                        'slug' => 'zitvolleybal',
-                        'name' => __('Zitvolleybal', $this->plugin_slug),
-                        'children' => array(
-                            // array(
-                            //     'slug' => 'dames-zitvolleybal',
-                            //     'name' => __('Dames Zitvolleybal', $this->plugin_slug),
-                            //     'meta' => array(
-                            //         'nevobo-team-type' => 'DZ',
-                            //     ),
-                            // ),
-                            // array(
-                            //     'slug' => 'heren-zitvolleybal',
-                            //     'name' => __('Heren Zitvolleybal', $this->plugin_slug),
-                            //     'meta' => array(
-                            //         'nevobo-team-type' => 'HZ',
-                            //     ),
-                            // ),
-                            array(
-                                'slug' => 'mix-zitvolleybal',
-                                'name' => __('Mix Zitvolleybal', $this->plugin_slug),
-                                'meta' => array(
-                                    'nevobo-team-type' => 'XZ',
-                                ),
-                            ),
-                        )
-                    ),
-                    /**
-                     * Onder 21
-                     */
-                    array(
-                        'slug' => 'onder-21',
-                        'name' => __('Onder 21', $this->plugin_slug),
-                        'children' => array(
-                            array(
-                                'slug' => 'dames-21',
-                                'name' => __('Dames < 21', $this->plugin_slug),
-                                'meta' => array(
-                                    'nevobo-team-type' => 'DJ',
-                                ),
-                            ),
-                            array(
-                                'slug' => 'heren-21',
-                                'name' => __('Heren < 21', $this->plugin_slug),
-                                'meta' => array(
-                                    'nevobo-team-type' => 'HJ',
-                                ),
-                            ),
-                        ),
-                    ),
+                    // /**
+                    //  * Masters
+                    //  */
+                    // array(
+                    //     'slug' => 'master',
+                    //     'name' => __('Master', $this->plugin_slug),
+                    //     'children' => array(
+                    //         array(
+                    //             'slug' => 'dames-master',
+                    //             'name' => __('Dames Master', $this->plugin_slug),
+                    //             'meta' => array(
+                    //                 'nevobo-team-type' => 'DM',
+                    //             ),
+                    //         ),
+                    //         array(
+                    //             'slug' => 'heren-master',
+                    //             'name' => __('Heren Master', $this->plugin_slug),
+                    //             'meta' => array(
+                    //                 'nevobo-team-type' => 'HM',
+                    //             ),
+                    //         ),
+                    //         array(
+                    //             'slug' => 'mix-master',
+                    //             'name' => __('Mix Master', $this->plugin_slug),
+                    //             'meta' => array(
+                    //                 'nevobo-team-type' => 'XM',
+                    //             ),
+                    //         ),
+                    //     )
+                    // ),
+                    // /** 
+                    //  * Zitvolleybal
+                    //  */
+                    // array(
+                    //     'slug' => 'zitvolleybal',
+                    //     'name' => __('Zitvolleybal', $this->plugin_slug),
+                    //     'children' => array(
+                    //         array(
+                    //             'slug' => 'dames-zitvolleybal',
+                    //             'name' => __('Dames Zitvolleybal', $this->plugin_slug),
+                    //             'meta' => array(
+                    //                 'nevobo-team-type' => 'DZ',
+                    //             ),
+                    //         ),
+                    //         array(
+                    //             'slug' => 'heren-zitvolleybal',
+                    //             'name' => __('Heren Zitvolleybal', $this->plugin_slug),
+                    //             'meta' => array(
+                    //                 'nevobo-team-type' => 'HZ',
+                    //             ),
+                    //         ),
+                    //         array(
+                    //             'slug' => 'mix-zitvolleybal',
+                    //             'name' => __('Mix Zitvolleybal', $this->plugin_slug),
+                    //             'meta' => array(
+                    //                 'nevobo-team-type' => 'XZ',
+                    //             ),
+                    //         ),
+                    //     )
+                    // ),
+                    // /**
+                    //  * Onder 21
+                    //  */
+                    // array(
+                    //     'slug' => 'onder-21',
+                    //     'name' => __('Onder 21', $this->plugin_slug),
+                    //     'children' => array(
+                    //         array(
+                    //             'slug' => 'dames-21',
+                    //             'name' => __('Dames < 21', $this->plugin_slug),
+                    //             'meta' => array(
+                    //                 'nevobo-team-type' => 'DJ',
+                    //             ),
+                    //         ),
+                    //         array(
+                    //             'slug' => 'heren-21',
+                    //             'name' => __('Heren < 21', $this->plugin_slug),
+                    //             'meta' => array(
+                    //                 'nevobo-team-type' => 'HJ',
+                    //             ),
+                    //         ),
+                    //     ),
+                    // ),
                 )
             ),
+            /**
+             * The Nevobo match type custom terms
+             */
             // array(
             //     'taxonomy' => 'nevobo-match-status',
             //     'terms' => array(
@@ -766,7 +947,7 @@ class Nevobo_Beheer_Objects
 
         // remove the inserted term off the terms array
         array_shift($terms);
-        // ecursively insert the remaining terms with the old parent id
+        // recursively insert the remaining terms with the old parent id
         $this->insert_custom_terms_recursively($taxonomy, $terms, $parent);
         return;
     }

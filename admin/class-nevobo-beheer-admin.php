@@ -41,6 +41,15 @@ class Nevobo_Beheer_Admin
 	private $version;
 
 	/**
+	 * The admin-specific callbacks of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      Nevobo_Beheer_Admin_Callbacks    $callbacks    The callbacks of this plugin.
+	 */
+	private $callbacks;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since      1.0.0
@@ -51,6 +60,280 @@ class Nevobo_Beheer_Admin
 	{
 		$this->plugin_slug = $plugin_slug;
 		$this->version = $version;
+
+		/**
+		 * Admin settings callback functions
+		 */
+		require_once plugin_dir_path(__FILE__) . 'class-nevobo-beheer-admin-callbacks.php';
+		$this->callbacks = new Nevobo_Beheer_Admin_Callbacks($plugin_slug, $version);
+	}
+
+	/**
+	 * Add all the custom admin menu pages.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function add_custom_menu_pages()
+	{
+		/**
+		 * The array containing all the admin menu pages to register
+		 */
+		$menu_pages = array(
+			/**
+			 * Competition menu page
+			 */
+			array(
+				'page_title' => __('Competitie', $this->plugin_slug),
+				'menu_title' => __('Competitie', $this->plugin_slug),
+				'capability' => 'manage_options',
+				'menu_slug' => 'nevobo-competition',
+				'callback' => '', // empty
+				'icon_url' => 'dashicons-list-view',
+				'position' => 35,
+			),
+		);
+
+		/**
+		 * Loop to add all the admin menu pages in the array
+		 */
+		foreach ($menu_pages as $menu_page) {
+			add_menu_page(
+				$menu_page['page_title'],
+				$menu_page['menu_title'],
+				$menu_page['capability'],
+				$menu_page['menu_slug'],
+				$menu_page['callback'],
+				$menu_page['icon_url'],
+				$menu_page['position'],
+			);
+		}
+	}
+
+	/**
+	 * Add all the custom admin submenu pages.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function add_custom_submenu_pages()
+	{
+		/**
+		 * The array containing all the submenu pages to register
+		 */
+		$submenu_pages = array(
+			/**
+			 * The Nevobo beheer settings submenu page
+			 */
+			array(
+				'parent_slug' => 'options-general.php',
+				'page_title' => __('Nevobo team- en competitiebeheer-instellingen', $this->plugin_slug),
+				'menu_title' => __('Nevobo beheer', $this->plugin_slug),
+				'capability' => 'manage_options',
+				'menu_slug' => 'nevobo-beheer-settings',
+				'callback' => function () {
+					require_once plugin_dir_path(__FILE__) . 'partials/nevobo-beheer-admin-settings-display.php';
+				},
+				'position' => 7,
+			),
+		);
+
+		/**
+		 * Loop to add all the admin submenu pages in the array
+		 */
+		foreach ($submenu_pages as $submenu_page) {
+			add_submenu_page(
+				$submenu_page['parent_slug'],
+				$submenu_page['page_title'],
+				$submenu_page['menu_title'],
+				$submenu_page['capability'],
+				$submenu_page['menu_slug'],
+				$submenu_page['callback'],
+				$submenu_page['position'],
+			);
+		}
+	}
+
+	/**
+	 * Register all the custom settings and its data.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function register_custom_settings()
+	{
+		/**
+		 * The array containing all the custom settings
+		 */
+		$settings = array(
+			/**
+			 * Nevobo beheer settings
+			 */
+			array(
+				'option_group' => 'nevobo-beheer-association-settings-group',
+				'option_name' => 'nevobo-beheer-association-settings',
+				'args' => array(
+					'type' => 'array',
+					'description' => __('Instellingengroep betreffende de vereniging.', $this->plugin_slug),
+					'sanitize_callback' => array($this->callbacks, 'association_settings_sanitize_callback'),
+					'show_in_rest' => array(
+						'schema' => array(
+							'type'  => 'array',
+							'items' => array(
+								'type' => 'string',
+							),
+						),
+					),
+					'default' => array(
+						'association-code' => '',
+						'association-name' => '',
+						'association-region' => '',
+						'association-province' => '',
+						'association-commune' => '',
+						'association-location' => '',
+					),
+				),
+			),
+		);
+
+		/**
+		 * Loop to register all the custom settings in the array
+		 */
+		foreach ($settings as $setting) {
+			register_setting(
+				$setting['option_group'],
+				$setting['option_name'],
+				$setting['args'],
+			);
+		}
+	}
+
+	/**
+	 * Add all the custom settings sections to the setting pages.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function add_custom_settings_sections()
+	{
+		/**
+		 * The array containing all the custom settings sections
+		 */
+		$settings_sections = array(
+			/**
+			 * Association settings section
+			 */
+			array(
+				'id' => 'nevobo-beheer-association-settings-section',
+				'title' => __('Verenigingsinformatie', $this->plugin_slug),
+				'callback' => function () {
+					$description = esc_html(__('Vul hieronder de Nevobo verenigingscode in. Bij het opslaan van de wijzigingen zullen de overige velden automatisch worden ingevuld.', $this->plugin_slug));
+					printf('<p>%s</p>', $description);
+				},
+				'page' => 'nevobo-beheer-association-settings',
+				'args' => array(
+					// 'before_section' => '',
+					// 'after_section' => '',
+					// 'section_class' => '',
+				),
+			),
+		);
+
+		/**
+		 * Loop to register all the custom settings sections in the array
+		 */
+		foreach ($settings_sections as $section) {
+			add_settings_section(
+				$section['id'],
+				$section['title'],
+				$section['callback'],
+				$section['page'],
+				$section['args'],
+			);
+		}
+	}
+
+	/**
+	 * Add all the custom setting fields to a section of a settings page.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function add_custom_settings_fields()
+	{
+		/**
+		 * The array containing all the custom settings fields
+		 */
+		$fields = array(
+			/**
+			 * Verenigingscode
+			 */
+			array(
+				'id' => 'nevobo-beheer-association-code',
+				'title' => __('Verenigingscode', $this->plugin_slug),
+				'callback' => array($this->callbacks, 'association_settings_fields_callback'),
+				'page' => 'nevobo-beheer-association-settings',
+				'section' => 'nevobo-beheer-association-settings-section',
+				'args' => array(
+					'label-for' => 'association-code',
+					'class' => 'nevobo-beheer-association-code regular-text',
+					'option' => 'nevobo-beheer-association-settings',
+					'type' => 'text',
+					'readonly' => false,
+					'description' => __('De Nevobo verenigingscode, welke gebruikt wordt om de competitiegegevens op te halen.', $this->plugin_slug),
+				),
+			),
+			/**
+			 * Verenigingsnaam
+			 */
+			array(
+				'id' => 'nevobo-beheer-association-name',
+				'title' => __('Verenigingsnaam', $this->plugin_slug),
+				'callback' => array($this->callbacks, 'association_settings_fields_callback'),
+				'page' => 'nevobo-beheer-association-settings',
+				'section' => 'nevobo-beheer-association-settings-section',
+				'args' => array(
+					'label-for' => 'association-name',
+					'class' => 'nevobo-beheer-association-name regular-text',
+					'option' => 'nevobo-beheer-association-settings',
+					'type' => 'text',
+					'readonly' => true,
+					'description' => __('De verenigingsnaam wordt o.a. gebruikt om vast te stellen of een team bij de betreffende vereniging hoort.', $this->plugin_slug),
+				),
+			),
+			/**
+			 * Verenigingsplaats
+			 */
+			array(
+				'id' => 'nevobo-beheer-association-location',
+				'title' => __('Verenigingsplaats', $this->plugin_slug),
+				'callback' => array($this->callbacks, 'association_settings_fields_callback'),
+				'page' => 'nevobo-beheer-association-settings',
+				'section' => 'nevobo-beheer-association-settings-section',
+				'args' => array(
+					'label-for' => 'association-location',
+					'class' => 'nevobo-beheer-association-location regular-text',
+					'option' => 'nevobo-beheer-association-settings',
+					'type' => 'text',
+					'readonly' => true,
+					'description' => __('De verenigingsplaats wordt o.a. gebruikt om vast te stellen of een wedstrijd thuis of uit gespeeld wordt.', $this->plugin_slug),
+				),
+			),
+		);
+
+		/**
+		 * Loop to register all the custom settings sections in the array
+		 */
+		foreach ($fields as $field) {
+			add_settings_field(
+				$field['id'],
+				$field['title'],
+				$field['callback'],
+				$field['page'],
+				$field['section'],
+				$field['args'],
+			);
+		}
 	}
 
 	/**
@@ -114,15 +397,14 @@ class Nevobo_Beheer_Admin
 				}
 				return;
 			case 'nevobo-team-link':
-				$association_name = 'Morgana DVO'; 	// to do: get association name
-				$association_code = 'CKL8C6M'; 		// to do: get association code
+				$option = get_option('nevobo-beheer-association-settings');
 				$team_type = get_post_meta($post_id, 'nevobo-team-type', true);
 				$team_serial_number = get_post_meta($post_id, 'nevobo-team-serial-number', true);
 				if ($team_type === '' || $team_serial_number === '') {
 					echo '—';
 				} else {
-					$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s-%s', strtolower($association_code), strtolower($team_type), strtolower($team_serial_number));
-					$title = sprintf('Team %s %s %s - Volleybal competitie - Volleybal.nl', $association_name, $team_type, $team_serial_number);
+					$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s-%s', strtolower($option['association-code']), strtolower($team_type), strtolower($team_serial_number));
+					$title = sprintf('Team %s %s %s - Volleybal competitie - Volleybal.nl', $option['association-name'], $team_type, $team_serial_number);
 					printf('<a href="%s" title="%s" target="_blank"><span class="dashicons dashicons-external"></span></a>', esc_html($link), esc_html($title));
 				}
 				return;
@@ -141,6 +423,7 @@ class Nevobo_Beheer_Admin
 		$sortable_columns['meta-nevobo-team-serial-number'] = 'meta-nevobo-team-serial-number';
 		$sortable_columns['taxonomy-nevobo-team-category'] = 'taxonomy-nevobo-team-category';
 		$sortable_columns['meta-nevobo-team-pool'] = 'meta-nevobo-team-pool';
+
 		return $sortable_columns;
 	}
 
@@ -228,7 +511,7 @@ class Nevobo_Beheer_Admin
 		// file_put_contents($file, print_r($query, true) . "\n", FILE_APPEND);
 
 		switch ($orderby) {
-			case '':
+			case '': // default order by
 				$query->set('orderby', 'title');
 				$query->set('order', 'ASC');
 				return;
