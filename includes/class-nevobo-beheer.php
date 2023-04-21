@@ -170,10 +170,13 @@ class Nevobo_Beheer
 	{
 		$plugin_admin = new Nevobo_Beheer_Admin($this->get_plugin_slug(), $this->get_version());
 
-		// register custom admin menu pages
+		// register custom menu pages
 		$this->loader->add_action('admin_menu', $plugin_admin, 'add_custom_menu_pages');
-		// register custom admin submenu pages
+		// register custom submenu pages
 		$this->loader->add_action('admin_menu', $plugin_admin, 'add_custom_submenu_pages');
+
+		// set custom action links displayed in the plugins list table
+		$this->loader->add_action(sprintf('plugin_action_links_%s', NEVOBO_BEHEER_PLUGIN_BASENAME), $plugin_admin, 'set_custom_plugin_action_links');
  
 		// register custom settings
 		$this->loader->add_action('admin_menu', $plugin_admin, 'register_custom_settings');

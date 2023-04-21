@@ -19,3 +19,5 @@
         <?php submit_button(null, 'primary', 'submit', true, null); ?>
     </form>
 </div>
+<h2>Debug</h2>
+<?php print("<pre>nevobo-beheer-association-settings: " . print_r(get_option('nevobo-beheer-association-settings'), true) . "</pre>") ?>

@@ -61,9 +61,7 @@ class Nevobo_Beheer_Admin
 		$this->plugin_slug = $plugin_slug;
 		$this->version = $version;
 
-		/**
-		 * Admin settings callback functions
-		 */
+		// Admin settings callback functions
 		require_once plugin_dir_path(__FILE__) . 'class-nevobo-beheer-admin-callbacks.php';
 		$this->callbacks = new Nevobo_Beheer_Admin_Callbacks($plugin_slug, $version);
 	}
@@ -127,8 +125,8 @@ class Nevobo_Beheer_Admin
 			 */
 			array(
 				'parent_slug' => 'options-general.php',
-				'page_title' => __('Nevobo team- en competitiebeheer-instellingen', $this->plugin_slug),
-				'menu_title' => __('Nevobo beheer', $this->plugin_slug),
+				'page_title' => __('Nevobo team- en competitiebeheer', $this->plugin_slug),
+				'menu_title' => __('Nevobo-beheer', $this->plugin_slug),
 				'capability' => 'manage_options',
 				'menu_slug' => 'nevobo-beheer-settings',
 				'callback' => function () {
@@ -152,6 +150,21 @@ class Nevobo_Beheer_Admin
 				$submenu_page['position'],
 			);
 		}
+	}
+
+	/**
+	 * Filters the list of action links displayed in the plugins list table.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @param    array    $actions    The array of plugin action links.
+	 */
+	public function set_custom_plugin_action_links(array $actions)
+	{
+		$custom_actions = array(
+			sprintf('<a href="%s">%s</a>', menu_page_url('nevobo-beheer-settings', false), esc_html(__('Instellingen', $this->plugin_slug))),
+		);
+		return array_merge($custom_actions, $actions);
 	}
 
 	/**
@@ -225,7 +238,7 @@ class Nevobo_Beheer_Admin
 			 */
 			array(
 				'id' => 'nevobo-beheer-association-settings-section',
-				'title' => __('Verenigingsinformatie', $this->plugin_slug),
+				'title' => __('Verenigingsinstellingen', $this->plugin_slug),
 				'callback' => function () {
 					$description = esc_html(__('Vul hieronder de Nevobo verenigingscode in. Bij het opslaan van de wijzigingen zullen de overige velden automatisch worden ingevuld.', $this->plugin_slug));
 					printf('<p>%s</p>', $description);
@@ -400,10 +413,13 @@ class Nevobo_Beheer_Admin
 				$option = get_option('nevobo-beheer-association-settings');
 				$team_type = get_post_meta($post_id, 'nevobo-team-type', true);
 				$team_serial_number = get_post_meta($post_id, 'nevobo-team-serial-number', true);
-				if ($team_type === '' || $team_serial_number === '') {
+				if ($team_type === '') {
 					echo '—';
 				} else {
-					$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s-%s', strtolower($option['association-code']), strtolower($team_type), strtolower($team_serial_number));
+					/**
+					 * Todo: create link if no team serial number (M6/J6)
+					 */
+					$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s-%s', strtolower($option['association-code']), strtolower($team_type), $team_serial_number);
 					$title = sprintf('Team %s %s %s - Volleybal competitie - Volleybal.nl', $option['association-name'], $team_type, $team_serial_number);
 					printf('<a href="%s" title="%s" target="_blank"><span class="dashicons dashicons-external"></span></a>', esc_html($link), esc_html($title));
 				}
@@ -541,14 +557,14 @@ class Nevobo_Beheer_Admin
 		wp_enqueue_style($this->plugin_slug, plugin_dir_url(__FILE__) . 'css/nevobo-beheer-admin.css', array(), $this->version, 'all');
 	}
 
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts()
-	{
-		// enqueue the javascript for the admin area
-		wp_enqueue_script($this->plugin_slug, plugin_dir_url(__FILE__) . 'js/nevobo-beheer-admin.js', array('jquery'), $this->version, false);
-	}
+	// /**
+	//  * Register the JavaScript for the admin area.
+	//  *
+	//  * @since    1.0.0
+	//  */
+	// public function enqueue_scripts()
+	// {
+	// 	// enqueue the javascript for the admin area
+	// 	wp_enqueue_script($this->plugin_slug, plugin_dir_url(__FILE__) . 'js/nevobo-beheer-admin.js', array('jquery'), $this->version, false);
+	// }
 }

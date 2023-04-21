@@ -94,12 +94,12 @@ class Nevobo_Beheer_Admin_Callbacks
             add_settings_error($error_slug, $error_id, $message, 'error');
             return $output;
         }
-        
-        try {
-            // try to obtain association information by performing an API request
+
+        // try to obtain association information by performing an API request
+        try {            
             $association = $this->get_association_information($association_code);
 
-            // setting the output fields accroding to API response
+            // setting the output fields accroding to the API response
             $output['association-code'] = $association['organisatiecode'];
             $output['association-name'] = $association['naam'];
             $output['association-region'] = $association['regio'];
@@ -110,6 +110,8 @@ class Nevobo_Beheer_Admin_Callbacks
             $message = $exception->getMessage();
             add_settings_error($error_slug, $error_id, $message, 'error');
         }
+
+        // return the sanitized callback
         return $output;
     }
 
@@ -143,7 +145,7 @@ class Nevobo_Beheer_Admin_Callbacks
                 throw new Exception(__('Er is een onverwachte HTTP-code ontvangen bij het ophalen van de verenigingsinformatie. Vul een geldige verenigscode in en probeer het opnieuw.', $this->plugin_slug));
         }
 
-        // return docoded json associative array
+        // return decoded json associative array
         return json_decode($json, true);
     }
 
@@ -168,6 +170,6 @@ class Nevobo_Beheer_Admin_Callbacks
         <input name="<?= esc_attr($name) ?>" type="<?= esc_attr($args['type']) ?>" id="<?= esc_attr($args['label-for']) ?>" class='<?= $args['class'] ?>' <?= $args['readonly'] ? 'readonly="readonly"' : ''; ?> value="<?= esc_attr($option[$args['label-for']]) ?>" aria-describedby='<?= esc_attr($described_by) ?>'></input>
         <p class="description" id="<?= esc_attr($described_by) ?>"><?= esc_html($args['description']); ?></p>
 
-<?= ob_get_clean();
+        <?= ob_get_clean();
     }
 }

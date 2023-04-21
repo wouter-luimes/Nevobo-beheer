@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { select, dispatch } from '@wordpress/data';
 import { useEntityProp } from '@wordpress/core-data';
 import { __experimentalNumberControl as NumberControl, SelectControl } from '@wordpress/components';
+import { decodeEntities } from '@wordpress/html-entities';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import { registerPlugin } from '@wordpress/plugins';
 
@@ -19,9 +20,6 @@ const NevoboBeheerTeamMetaPanel = () => {
     if (postType !== 'nevobo-team') {
         return null;
     }
-
-    // Remove the Nevobo Team category select panel
-    dispatch('core/edit-post').removeEditorPanel('taxonomy-panel-nevobo-team-category');
 
     // Get the meta values and a function for updating the meta values from useEntityProp
     const [meta, setMeta] = useEntityProp('postType', postType, 'meta');
@@ -54,7 +52,7 @@ const NevoboBeheerTeamMetaPanel = () => {
     const getTeamTypeOptions = () => {
         let options = [];
         // Check if the category terms array has already been loaded 
-        if (teamCategoryTerms) {
+        if (teamCategoryTerms !== null) {
             // Add option when no team type has been selected yet
             options.push({ value: '', label: __('Selecteer het teamtype', 'nevobo-beheer') });
             // Loop over every team category term
@@ -63,8 +61,7 @@ const NevoboBeheerTeamMetaPanel = () => {
                 // Check if the term type has been set
                 if (teamtype !== '') {
                     // Add term type to the option array
-                    options.push({ value: teamtype, label: `${teamtype} (${term.name})` });
-                    // Todo: fix bug to display '<' character
+                    options.push({ value: teamtype, label: `${teamtype} (${decodeEntities(term.name)})` });
                 }
             });
         } else {
@@ -99,8 +96,12 @@ const NevoboBeheerTeamMetaPanel = () => {
                 term = teamCategoryTerms.find(item => item.id === term.parent);
             }
         }
+        // Setting the team categories
         setTeamCategories(teamCategories);
     }
+
+    // Remove the Nevobo Team category select panel
+    dispatch('core/edit-post').removeEditorPanel('taxonomy-panel-nevobo-team-category');
 
     /**
     * A helper function for getting the Nevobo team serial number
@@ -142,7 +143,7 @@ const NevoboBeheerTeamMetaPanel = () => {
                 value={getTeamSerialNumber()}
                 onChange={(value) => setTeamSerialNumber(value)}
                 labelPosition={'side'}
-                help={__('Bijvoorbeeld 1 voor Dames 1.')}
+                help={__('Bijvoorbeeld \'1\' voor Dames 1.')}
                 min={1}
                 spinControl={'native'}
                 isDragEnabled={false}

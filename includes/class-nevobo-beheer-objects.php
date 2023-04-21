@@ -310,8 +310,8 @@ class Nevobo_Beheer_Objects
                 )
             ),
             /**
-            * To do: Nevobo competition custom post types
-            */
+         * To do: Nevobo competition custom post types
+         */
         );
 
         /**
@@ -405,7 +405,7 @@ class Nevobo_Beheer_Objects
              */
             array(
                 'taxonomy' => 'nevobo-team-category',
-                'object_type' => array('nevobo-team'), // object types to which the taxonomy should be associated
+                'object_type' => array('nevobo-team'),
                 'args' => array(
                     'labels' => array(
                         'name' => __('Teamcategorieën', $this->plugin_slug),
@@ -466,7 +466,71 @@ class Nevobo_Beheer_Objects
                     //     'assign_terms' => 'edit_posts',
                     // ),
                     'rewrite' => array(
-                        'slug' => 'team-categorie'
+                        'slug' => 'teamcategorie'
+                    ),
+                    // 'query_var' => '',
+                    // 'update_count_callback' => function(){},
+                    // 'default_term' => array(),
+                    'sort' => true,
+                    // 'args' => '',
+                ),
+            ),
+            /**
+             * The Nevobo match status custom taxonomy
+             */
+            array(
+                'taxonomy' => 'nevobo-match-status',
+                'object_type' => array('nevobo-programme', 'nevobo-result'),
+                'args' => array(
+                    'labels' => array(
+                        'name' => __('Wedstrijdstatussen', $this->plugin_slug),
+                        'singular_name' => __('Wedstrijdstatus', $this->plugin_slug),
+                        'search_items' => __('Wedstrijdstatussen zoeken', $this->plugin_slug),
+                        'popular_items' => __('Populaire wedstrijdstatussen', $this->plugin_slug),
+                        'all_items' => __('Alle wedstrijdstatussen', $this->plugin_slug),
+                        'parent_item' => __('Hoofdwedstrijdstatus', $this->plugin_slug), // not used
+                        'parent_item_colon' => __('Hoofdwedstrijdstatus:', $this->plugin_slug), // not used
+                        // 'name_field_description' => __('De naam is zoals deze op je site verschijnt.', $this->plugin_slug),
+                        // 'slug_field_description' => __('De \"slug\" is de URL vriendelijke versie van de naam. Het is meestal allemaal kleine letters en bevat alleen letters, cijfers en koppeltekens.', $this->plugin_slug),
+                        // 'parent_field_description' => __('Een hoofd term toewijzen om een hiërarchie te maken. De term Jazz zou bijvoorbeeld het hoofd zijn van Bebop en Big Band.', $this->plugin_slug),
+                        // 'desc_field_description' => __('De beschrijving is standaard niet prominent aanwezig; maar sommige thema\'s kunnen ze echter wel tonen.', $this->plugin_slug),
+                        'edit_item' => __('Wedstrijdstatus bewerken', $this->plugin_slug),
+                        'view_item' => __('Wedstrijdstatus bekijken', $this->plugin_slug),
+                        'update_item' => __('Wedstrijdstatus updaten', $this->plugin_slug),
+                        'add_new_item' => __('Nieuwe wedstrijdstatus toevoegen', $this->plugin_slug),
+                        'new_item_name' => __('Nieuwe wedstrijdstatusnaam', $this->plugin_slug),
+                        'separate_items_with_commas' => __('Wedstrijdstatussen scheiden door komma\'s', $this->plugin_slug),
+                        'add_or_remove_items' => __('Wedstrijdstatussen toevoegen of verwijderen', $this->plugin_slug),
+                        'choose_from_most_used' => __('Kies uit de meest gebruikte wedstrijdstatussen', $this->plugin_slug),
+                        'not_found' => __('Geen wedstrijdstatussen gevonden.', $this->plugin_slug),
+                        'no_terms' => __('Geen wedstrijdstatussen', $this->plugin_slug),
+                        'filter_by_item' => __('Op wedstrijdstatus filteren', $this->plugin_slug),
+                        'items_list_navigation' => __('Navigatie door wedstrijdstatuslijst', $this->plugin_slug),
+                        'items_list' => __('Wedstrijdstatuslijst', $this->plugin_slug),
+                        // 'most_used' => __('Meest gebruikt', $this->plugin_slug),
+                        'back_to_items' => __('&larr; Ga naar wedstrijdstatussen', $this->plugin_slug),
+                        'item_link' => __('Wedstrijdstatus link', $this->plugin_slug),
+                        'item_link_description' => __('Een link naar een wedstrijdstatus.', $this->plugin_slug),
+                    ),
+                    'description' => __('De Nevobo-wedstrijdstatus custom taxonomy', $this->plugin_slug),
+                    'public' => true,
+                    'publicly_queryable' => true,
+                    'hierarchical' => false,
+                    'show_ui' => false,
+                    // 'show_in_menu' => true,
+                    // 'show_in_nav_menus' => true,
+                    'show_in_rest' => true,
+                    // 'rest_base' => '',
+                    // 'rest_namespace' => 'wp/v2',
+                    // 'rest_controller_class' => 'WP_REST_Terms_Controller',
+                    'show_tagcloud' => false,
+                    'show_in_quick_edit' => false,
+                    'show_admin_column' => false,
+                    // 'meta_box_cb' => function(){},
+                    // 'meta_box_sanitize_cb' => function(){},
+                    // 'capabilities' => array(),
+                    'rewrite' => array(
+                        'slug' => 'wedstrijdstatus'
                     ),
                     // 'query_var' => '',
                     // 'update_count_callback' => function(){},
@@ -475,10 +539,6 @@ class Nevobo_Beheer_Objects
                     // 'args' => '',
                 )
             ),
-            /**
-            * To do: Nevobo match status custom post type
-            */
-            // array(),
         );
 
         /**
@@ -859,37 +919,37 @@ class Nevobo_Beheer_Objects
                 )
             ),
             /**
-             * The Nevobo match type custom terms
-             */
-            // array(
-            //     'taxonomy' => 'nevobo-match-status',
-            //     'terms' => array(
-            //         array(
-            //             'slug' => 'concept',
-            //             'name' => __('Concept', $this->plugin_slug),
-            //         ),
-            //         array(
-            //             'slug' => 'gepland',
-            //             'name' => __('Gepland', $this->plugin_slug),
-            //         ),
-            //         array(
-            //             'slug' => 'uitgesteld',
-            //             'name' => __('Uitgesteld', $this->plugin_slug),
-            //         ),
-            //         array(
-            //             'slug' => 'vervallen',
-            //             'name' => __('Vervallen', $this->plugin_slug),
-            //         ),
-            //         array(
-            //             'slug' => 'afgebroken',
-            //             'name' => __('Afgebroken', $this->plugin_slug),
-            //         ),
-            //         array(
-            //             'slug' => 'gespeeld',
-            //             'name' => __('Gespeeld', $this->plugin_slug),
-            //         ),
-            //     ),
-            // )
+            * The Nevobo match type custom terms
+            */
+            array(
+                'taxonomy' => 'nevobo-match-status',
+                'terms' => array(
+                    array(
+                        'slug' => 'concept',
+                        'name' => __('Concept', $this->plugin_slug),
+                    ),
+                    array(
+                        'slug' => 'gepland',
+                        'name' => __('Gepland', $this->plugin_slug),
+                    ),
+                    array(
+                        'slug' => 'uitgesteld',
+                        'name' => __('Uitgesteld', $this->plugin_slug),
+                    ),
+                    array(
+                        'slug' => 'vervallen',
+                        'name' => __('Vervallen', $this->plugin_slug),
+                    ),
+                    array(
+                        'slug' => 'afgebroken',
+                        'name' => __('Afgebroken', $this->plugin_slug),
+                    ),
+                    array(
+                        'slug' => 'gespeeld',
+                        'name' => __('Gespeeld', $this->plugin_slug),
+                    ),
+                ),
+            )
         );
 
         /**

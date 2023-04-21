@@ -38,6 +38,12 @@ if (!defined('WPINC')) {
 define('NEVOBO_BEHEER_VERSION', '1.0.0');
 
 /**
+ * Plugin file basename.
+ * Used in the loader when the plugin action links are added.
+ */
+define( 'NEVOBO_BEHEER_PLUGIN_BASENAME', plugin_basename(__FILE__) );
+
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-nevobo-beheer-activator.php
  */
