@@ -79,7 +79,6 @@ class Nevobo_Beheer
 		$this->set_locale();
 		$this->define_object_hooks();
 		$this->define_admin_hooks();
-		$this->define_gutenberg_hooks();
 		$this->define_public_hooks();
 	}
 
@@ -201,22 +200,11 @@ class Nevobo_Beheer
 		// enqueue the stylesheets for the admin area
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 
+		// enqueue the block editor assets
+		$this->loader->add_action('enqueue_block_editor_assets', $plugin_admin, 'enqueue_nevobo_team_block_editor_assets');
+
 		// enqueue the javascript for the admin area
 		// $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-	}
-
-	/**
-	 * Register all of the hooks related to the Gutenberg functionality of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_gutenberg_hooks()
-	{
-		$plugin_gutenberg = new Nevobo_Beheer_Gutenberg($this->get_plugin_slug(), $this->get_version());
-
-		// enqueue meta panel block editor assets
-		$this->loader->add_action('enqueue_block_editor_assets', $plugin_gutenberg, 'enqueue_nevobo_team_block_editor_assets');
 	}
 
 	/**

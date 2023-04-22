@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "wp-scripts build --webpack-src-dir=./gutenberg/src --output-path=./gutenberg/build",
-    "start": "wp-scripts build --webpack-src-dir=./gutenberg/src --output-path=./gutenberg/build --watch"
+    "build": "wp-scripts build --webpack-src-dir=./admin/block-editor-source --output-path=./admin/block-editor",
+    "start": "wp-scripts build --webpack-src-dir=./admin/block-editor-source --output-path=./admin/block-editor --watch"
   },
   "keywords": [],
   "author": "Wouter Luimes",

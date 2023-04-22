@@ -566,6 +566,36 @@ class Nevobo_Beheer_Admin
 		wp_enqueue_style($this->plugin_slug, plugin_dir_url(__FILE__) . 'css/nevobo-beheer-admin.css', array(), $this->version, 'all');
 	}
 
+	/**
+	 * Fires after block editor assets have been enqueued for the editing interface
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_nevobo_team_block_editor_assets()
+	{
+		// check if the loaded post-type is the nevobo-team post-type, if not return
+		if (get_post_type() !== 'nevobo-team') {
+			return;
+		}
+
+		// check if there are dependencies that need to be loaded
+		$path = plugin_dir_path(__FILE__) . 'block-editor/index.asset.php';
+		if (file_exists($path)) {
+			$asset = require $path;
+		} else {
+			$asset = array('dependencies' => array(), 'version' => $this->version);
+		}
+
+		// enqueue the script
+		wp_enqueue_script(
+			'nevobo-beheer-block-editor-assets',
+			plugin_dir_url(__FILE__) . '/block-editor/index.js',
+			$asset['dependencies'],
+			$asset['version'],
+			true,
+		);
+	}
+
 	// /**
 	//  * Register the JavaScript for the admin area.
 	//  *
