@@ -387,42 +387,51 @@ class Nevobo_Beheer_Admin
 		switch ($column_name) {
 			case 'meta-nevobo-team-type':
 				$team_type = get_post_meta($post_id, 'nevobo-team-type', true);
-				if (empty($team_type)) {
-					echo '—';
-				} else {
+				// check if the team type has been set
+				if (!empty($team_type)) {
 					echo $team_type;
+					return;
 				}
+				echo '—';
 				return;
 			case 'meta-nevobo-team-serial-number':
 				$serial_number = (int)get_post_meta($post_id, 'nevobo-team-serial-number', true);
-				if ($serial_number === 0) {
-					echo '—';
-				} else {
+				// check if the team serial number has been set
+				if ($serial_number > 0) {
 					echo $serial_number;
+					return;
 				}
+				echo '—';
 				return;
 			case 'meta-nevobo-team-pool':
 				$pool = get_post_meta($post_id, 'meta-nevobo-team-pool', true);
-				if (empty($pool)) {
-					echo '—';
-				} else {
+				// check if the team pool has been set
+				if (!empty($pool)) {
 					echo $pool;
+					return;
 				}
+				echo '—';
 				return;
 			case 'nevobo-team-link':
 				$option = get_option('nevobo-beheer-association-settings');
-				$team_type = get_post_meta($post_id, 'nevobo-team-type', true);
-				$team_serial_number = get_post_meta($post_id, 'nevobo-team-serial-number', true);
-				if ($team_type === '') {
-					echo '—';
-				} else {
-					/**
-					 * Todo: create link if no team serial number (M6/J6)
-					 */
+				$team_meta = get_post_meta($post_id);
+				$team_type = current($team_meta['nevobo-team-type']);
+				$team_serial_number = (int)current($team_meta['nevobo-team-serial-number']);
+				// check if the team type has been set and if the team serial number is larger than 0
+				if (!empty($team_type) && $team_serial_number > 0) {
 					$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s-%s', strtolower($option['association-code']), strtolower($team_type), $team_serial_number);
 					$title = sprintf('Team %s %s %s - Volleybal competitie - Volleybal.nl', $option['association-name'], $team_type, $team_serial_number);
 					printf('<a href="%s" title="%s" target="_blank"><span class="dashicons dashicons-external"></span></a>', esc_html($link), esc_html($title));
+					return;
 				}
+				// check if the team type has been set and if the team serial number is equal to 0
+				if (!empty($team_type) && $team_serial_number === 0) {
+					$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s', strtolower($option['association-code']), strtolower($team_type));
+					$title = sprintf('Team %s %s - Volleybal competitie - Volleybal.nl', $option['association-name'], $team_type);
+					printf('<a href="%s" title="%s" target="_blank"><span class="dashicons dashicons-external"></span></a>', esc_html($link), esc_html($title));
+					return;
+				}
+				echo '—';
 				return;
 		}
 	}
