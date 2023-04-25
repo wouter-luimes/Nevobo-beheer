@@ -35,7 +35,7 @@ class Nevobo_Beheer_Objects
      *
      * @since    1.0.0
      * @access   private
-     * @var      string    $version    The current version of this plugin.
+     * @var      string    $version        The current version of this plugin.
      */
     private $version;
 
@@ -122,14 +122,14 @@ class Nevobo_Beheer_Objects
                     'menu_position' => 30,
                     'menu_icon' => 'dashicons-groups',
                     // 'capability_type' => 'post',
-                    // 'capabilities' => [],
+                    // 'capabilities' => array(),
                     // 'map_meta_cap' => false,
                     'supports' => array('title', 'editor', 'custom-fields'), // 'post-formats'), // 'thumbnail', 'revisions',
                     // 'register_meta_box_cb' => function(){},
                     'taxonomies' => array('nevobo-team-category'),
                     'has_archive' => false,
                     'rewrite' => array(
-                        'slug' => 'teams',
+                        'slug' => __('teams', $this->plugin_slug),
                         'feeds' => true,
                     ),
                     // 'query_var' => '',
@@ -197,24 +197,25 @@ class Nevobo_Beheer_Objects
                     // 'menu_position' => null,
                     // 'menu_icon' => '',
                     // 'capability_type' => 'post',
-                    'capabilities' => array(
-                        'edit_post' => 'do_not_allow',
-                        'read_post' => 'edit_posts',
-                        'delete_post' => 'do_not_allow',
-                        'edit_posts' => 'edit_posts',
-                        'edit_others_posts' => 'do_not_allow',
-                        'delete_posts' => 'do_not_allow',
-                        'publish_posts' => 'do_not_allow',
-                        'read_private_posts' => 'do_not_allow',
-                        'create_posts' => 'do_not_allow',
-                    ),
+                    // 'capabilities' => array(),
+                    // 'capabilities' => array(
+                    //     'edit_post' => 'do_not_allow',
+                    //     'read_post' => 'edit_posts',
+                    //     'delete_post' => 'do_not_allow',
+                    //     'edit_posts' => 'edit_posts',
+                    //     'edit_others_posts' => 'do_not_allow',
+                    //     'delete_posts' => 'do_not_allow',
+                    //     'publish_posts' => 'do_not_allow',
+                    //     'read_private_posts' => 'do_not_allow',
+                    //     'create_posts' => 'do_not_allow',
+                    // ),
                     // 'map_meta_cap' => false,
                     'supports' => array('title', 'custom-fields'),
                     // 'register_meta_box_cb' => function(){},
                     'taxonomies' => array('nevobo-match-type'),
                     'has_archive' => false,
                     'rewrite' => array(
-                        'slug' => 'programma',
+                        'slug' => __('programma', $this->plugin_slug),
                         'feeds' => true,
                     ),
                     // 'query_var' => '',
@@ -282,24 +283,25 @@ class Nevobo_Beheer_Objects
                     // 'menu_position' => null,
                     // 'menu_icon' => '',
                     // 'capability_type' => 'post',
-                    'capabilities' => array(
-                        'edit_post' => 'do_not_allow',
-                        'read_post' => 'edit_posts',
-                        'delete_post' => 'do_not_allow',
-                        'edit_posts' => 'edit_posts',
-                        'edit_others_posts' => 'do_not_allow',
-                        'delete_posts' => 'do_not_allow',
-                        'publish_posts' => 'do_not_allow',
-                        'read_private_posts' => 'do_not_allow',
-                        'create_posts' => 'do_not_allow',
-                    ),
+                    // 'capabilities' => array(),
+                    // 'capabilities' => array(
+                    //     'edit_post' => 'do_not_allow',
+                    //     'read_post' => 'edit_posts',
+                    //     'delete_post' => 'do_not_allow',
+                    //     'edit_posts' => 'edit_posts',
+                    //     'edit_others_posts' => 'do_not_allow',
+                    //     'delete_posts' => 'do_not_allow',
+                    //     'publish_posts' => 'do_not_allow',
+                    //     'read_private_posts' => 'do_not_allow',
+                    //     'create_posts' => 'do_not_allow',
+                    // ),
                     // 'map_meta_cap' => false,
                     'supports' => array('title', 'custom-fields'),
                     // 'register_meta_box_cb' => function(){},
                     'taxonomies' => array('nevobo-match-type'),
                     'has_archive' => false,
                     'rewrite' => array(
-                        'slug' => 'resultaat',
+                        'slug' => __('resultaat', $this->plugin_slug),
                         'feeds' => true,
                     ),
                     // 'query_var' => '',
@@ -309,9 +311,7 @@ class Nevobo_Beheer_Objects
                     // 'template_lock' => false,
                 )
             ),
-            /**
-         * To do: Nevobo competition custom post types
-         */
+            // Todo: Nevobo competition pool custom post types
         );
 
         /**
@@ -338,7 +338,7 @@ class Nevobo_Beheer_Objects
          */
         $post_meta_keys = array(
             /**
-             * Team type
+             * Team - teamtype
              */
             array(
                 'post_type' => 'nevobo-team',
@@ -355,7 +355,7 @@ class Nevobo_Beheer_Objects
                 ),
             ),
             /**
-             * Team volgnummer
+             * Team - serial number
              */
             array(
                 'post_type' => 'nevobo-team',
@@ -372,8 +372,247 @@ class Nevobo_Beheer_Objects
                 ),
             ),
             /**
-             * To do: add meta keys for the Nevobo programme and results post types
+             * 
+             * Programme - code
              */
+            array(
+                'post_type' => 'nevobo-programme',
+                'meta_key' => 'nevobo-programme-code',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'integer',
+                    'description' => __('De code van het programma.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => 0,
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Programme - timestamp
+             */
+            array(
+                'post_type' => 'nevobo-programme',
+                'meta_key' => 'nevobo-programme-timestamp',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'integer',
+                    'description' => __('De Unix-tijd van het programma.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => 0,
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Programme - status
+             */
+            array(
+                'post_type' => 'nevobo-programme',
+                'meta_key' => 'nevobo-programme-status',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'string',
+                    'description' => __('De status van het programma.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Programme - match code
+             */
+            array(
+                'post_type' => 'nevobo-programme',
+                'meta_key' => 'nevobo-programme-match-code',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'string',
+                    'description' => __('De wedstrijdcode van het programma.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /** 
+             * Programme - team home
+             */
+            array(
+                'post_type' => 'nevobo-programme',
+                'meta_key' => 'nevobo-programme-team-home',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'string',
+                    'description' => __('Het thuisteam van het programma.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Programme - team away
+             */
+            array(
+                'post_type' => 'nevobo-programme',
+                'meta_key' => 'nevobo-programme-team-away',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'string',
+                    'description' => __('Het uitteam van het programma.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Programme - team type
+             */
+            array(
+                'post_type' => 'nevobo-programme',
+                'meta_key' => 'nevobo-programme-team-type',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'string',
+                    'description' => __('Het type van de teams van het programma.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Result - code
+             */
+            array(
+                'post_type' => 'nevobo-result',
+                'meta_key' => 'nevobo-result-code',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'integer',
+                    'description' => __('De code van het resultaat.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => 0,
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Result - timestamp
+             */
+            array(
+                'post_type' => 'nevobo-result',
+                'meta_key' => 'nevobo-result-timestamp',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'integer',
+                    'description' => __('De Unix-tijd van het resultaat.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => 0,
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Result - status
+             */
+            array(
+                'post_type' => 'nevobo-result',
+                'meta_key' => 'nevobo-result-match-code',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'string',
+                    'description' => __('De wedstrijdcode van het resultaat.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Result - match code
+             */
+            array(
+                'post_type' => 'nevobo-result',
+                'meta_key' => 'nevobo-result-status',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'string',
+                    'description' => __('De status van het resultaat.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /** 
+             * Result - team home
+             */
+            array(
+                'post_type' => 'nevobo-result',
+                'meta_key' => 'nevobo-result-team-home',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'string',
+                    'description' => __('Het thuisteam van het resultaat.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Result - team away
+             */
+            array(
+                'post_type' => 'nevobo-result',
+                'meta_key' => 'nevobo-result-team-away',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'string',
+                    'description' => __('Het uitteam van het resultaat.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Result - team type
+             */
+            array(
+                'post_type' => 'nevobo-result',
+                'meta_key' => 'nevobo-result-team-type',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'string',
+                    'description' => __('Het type van de teams van het resultaat.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+         * To do: add meta keys for the Nevobo programme, results and competition pool post types
+         */
         );
 
         /**
@@ -466,7 +705,7 @@ class Nevobo_Beheer_Objects
                     //     'assign_terms' => 'edit_posts',
                     // ),
                     'rewrite' => array(
-                        'slug' => 'teamcategorie'
+                        'slug' => __('teamcategorie', $this->plugin_slug),
                     ),
                     // 'query_var' => '',
                     // 'update_count_callback' => function(){},
@@ -530,7 +769,7 @@ class Nevobo_Beheer_Objects
                     // 'meta_box_sanitize_cb' => function(){},
                     // 'capabilities' => array(),
                     'rewrite' => array(
-                        'slug' => 'wedstrijdstatus'
+                        'slug' => __('wedstrijdstatus', $this->plugin_slug),
                     ),
                     // 'query_var' => '',
                     // 'update_count_callback' => function(){},
@@ -566,7 +805,7 @@ class Nevobo_Beheer_Objects
          */
         $term_meta_keys = array(
             /**
-             * Team type afkorting
+             * Team type abbreviation
              */
             array(
                 'taxonomy' => 'nevobo-team-category',
@@ -919,8 +1158,8 @@ class Nevobo_Beheer_Objects
                 )
             ),
             /**
-            * The Nevobo match type custom terms
-            */
+             * The Nevobo match type custom terms
+             */
             array(
                 'taxonomy' => 'nevobo-match-status',
                 'terms' => array(
@@ -964,7 +1203,7 @@ class Nevobo_Beheer_Objects
     }
 
     /**
-     * Recursivly insert all the custom terms into the custom taxonomies.
+     * Helper function to recursivly insert all the custom terms into the custom taxonomies.
      *
      * @since    1.0.0
      * @access   private

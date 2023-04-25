@@ -63,7 +63,7 @@ class Nevobo_Beheer_Admin_Callbacks
 
         // the settings errors settings to display to the user in case of an error
         $error_slug = 'nevobo-beheer-association-settings';
-        $error_id = 'nevobo-beheer-association-settings-error';
+        $error_id = sprintf('%s-error', $error_slug);
 
         // detect multiple sanitizing passes bug: https://core.trac.wordpress.org/ticket/21989
         static $passes = 0;

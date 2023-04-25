@@ -4,9 +4,10 @@
   "description": "=== Nevobo team- en competitiebeheer === Contributors: Wouter Luimes Donate link: https://www.wouterluimes.nl Tags: comments, spam Requires at least: 3.0.1 Tested up to: 3.4 Stable tag: 4.3 License: GPLv2 or later License URI: http://www.gnu.org/licenses/gpl-2.0.html",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "wp-scripts build --webpack-src-dir=./admin/block-editor-source --output-path=./admin/block-editor",
-    "start": "wp-scripts build --webpack-src-dir=./admin/block-editor-source --output-path=./admin/block-editor --watch"
+    "start": "wp-scripts build --webpack-src-dir=./admin/block-editor-source --output-path=./admin/block-editor --watch",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip"
   },
   "keywords": [],
   "author": "Wouter Luimes",

@@ -107,13 +107,10 @@ class Nevobo_Beheer
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-nevobo-beheer-i18n.php';
 
 		// The class responsible for defining all object type actions that occur.
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-nevobo-beheer-objects.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-nevobo-beheer-object-types.php';
 
 		// The class responsible for defining all actions that occur in the admin area.
 		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-nevobo-beheer-admin.php';
-
-		// The class responsible for defining all actions that occur in the Gutenberg editor.
-		require_once plugin_dir_path(dirname(__FILE__)) . 'gutenberg/class-nevobo-beheer-gutenberg.php';
 
 		// The class responsible for defining all actions that occur in the public-facing side of the site.
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-nevobo-beheer-public.php';
@@ -176,17 +173,17 @@ class Nevobo_Beheer
 
 		// set custom action links displayed in the plugins list table
 		$this->loader->add_action(sprintf('plugin_action_links_%s', NEVOBO_BEHEER_PLUGIN_BASENAME), $plugin_admin, 'set_custom_plugin_action_links');
- 
+
 		// register custom settings
 		$this->loader->add_action('admin_menu', $plugin_admin, 'register_custom_settings');
 		// add custom settings sections
 		$this->loader->add_action('admin_menu', $plugin_admin, 'add_custom_settings_sections');
 		// add custom settings fields
 		$this->loader->add_action('admin_menu', $plugin_admin, 'add_custom_settings_fields');
-		
-		// sets the column headings displayed in the Nevobo Teams post-type admin list table
-		$this->loader->add_filter('manage_nevobo-team_posts_columns', $plugin_admin, 'set_nevobo_teams_column_headings');
-		// sets the column cells displayed in the Nevobo Teams post-type admin list table
+
+		// sets the column headings displayed in the Nevobo team post-type admin list table
+		$this->loader->add_filter('manage_nevobo-team_posts_columns', $plugin_admin, 'set_nevobo_team_column_headings');
+		// sets the column cells displayed in the Nevobo team post-type admin list table
 		$this->loader->add_action('manage_nevobo-team_posts_custom_column', $plugin_admin, 'set_custom_post_column_cells', 10, 2);
 		// makes the column headings displayed in a specific custom post-type admin list table sortable
 		$this->loader->add_filter('manage_edit-nevobo-team_sortable_columns', $plugin_admin, 'set_custom_post_sortable_columns');
@@ -196,6 +193,12 @@ class Nevobo_Beheer
 		$this->loader->add_action('restrict_manage_posts', $plugin_admin, 'add_custom_post_filter_dropdown', 10, 2);
 		// sets custom orderby query parameters when ordering based on custom meta-data in the admin list table
 		$this->loader->add_action('pre_get_posts', $plugin_admin, 'set_custom_post_columns_order');
+
+		// sets the column headings displayed in the Nevobo programme post-type admin list table
+		$this->loader->add_filter('manage_nevobo-programme_posts_columns', $plugin_admin, 'set_nevobo_programme_column_headings');
+
+		// sets the column headings displayed in the Nevobo result post-type admin list table
+		$this->loader->add_filter('manage_nevobo-result_posts_columns', $plugin_admin, 'set_nevobo_result_column_headings');
 
 		// enqueue the stylesheets for the admin area
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');

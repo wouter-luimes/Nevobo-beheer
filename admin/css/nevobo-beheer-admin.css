@@ -7,19 +7,30 @@
   * Custom admin columns widths
   */
 .post-type-nevobo-team #meta-nevobo-team-type,
-.post-type-nevobo-team #meta-nevobo-team-serial-number,
-.post-type-nevobo-team #meta-nevobo-team-pool {
-    width: 15%;
+.post-type-nevobo-programme #meta-nevobo-programme-team-type,
+.post-type-nevobo-result #meta-nevobo-result-team-type {
+    width: 14%;
 }
+.post-type-nevobo-team #meta-nevobo-team-serial-number {
+    width: 17%;
+}
+
+/* Temp??? */
 .post-type-nevobo-team #taxonomy-nevobo-team-category {
     width: 25%;
 }
-.post-type-nevobo-team #nevobo-team-link {
+
+.post-type-nevobo-team #meta-nevobo-team-pool {
+    width: 11%;
+}
+.post-type-nevobo-team #nevobo-team-link,
+.post-type-nevobo-programme #meta-nevobo-programme-match-link,
+.post-type-nevobo-result #meta-nevobo-result-match-link {
     width: 2.2em;
 }
 
 /**
- * Hide the edit date fields in quick edit admin column
+ * Hide the edit date fields in Nevobo team quick edit admin column
  */
 .post-type-nevobo-team .inline-edit-col .inline-edit-date,
 .post-type-nevobo-team .inline-edit-col br {
