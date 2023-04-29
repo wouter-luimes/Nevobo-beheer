@@ -470,7 +470,7 @@ class Nevobo_Beheer_Admin
 				echo '—';
 				return;
 			case 'nevobo-team-link':
-				$option = get_option('nevobo-beheer-association-settings');
+				$option = get_option('nevobo-beheer-association-data');
 				$team_meta = get_post_meta($post_id);
 				$team_type = current($team_meta['nevobo-team-type']);
 				$team_serial_number = (int)current($team_meta['nevobo-team-serial-number']);
