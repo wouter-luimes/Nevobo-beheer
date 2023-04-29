@@ -125,7 +125,7 @@ class Nevobo_Beheer_Admin
 			 */
 			array(
 				'parent_slug' => 'options-general.php',
-				'page_title' => __('Nevobo team- en competitiebeheer', $this->plugin_slug),
+				'page_title' => __('Nevobo team- en competitiebeheerinstellingen', $this->plugin_slug),
 				'menu_title' => __('Nevobo-beheer', $this->plugin_slug),
 				'capability' => 'manage_options',
 				'menu_slug' => 'nevobo-beheer-settings',
@@ -180,30 +180,65 @@ class Nevobo_Beheer_Admin
 		 */
 		$settings = array(
 			/**
-			 * Nevobo beheer settings
+			 * Association options
 			 */
 			array(
-				'option_group' => 'nevobo-beheer-association-settings-group',
-				'option_name' => 'nevobo-beheer-association-settings',
+				'option_group' => 'nevobo-beheer-options-group',
+				'option_name' => 'nevobo-beheer-association-data',
 				'args' => array(
 					'type' => 'array',
-					'description' => __('Instellingengroep betreffende de vereniging.', $this->plugin_slug),
-					'sanitize_callback' => array($this->callbacks, 'association_settings_sanitize_callback'),
+					'description' => __('De gegevens betreffende de vereniging.', $this->plugin_slug),
+					'sanitize_callback' => array($this->callbacks, 'association_data_sanitize_callback'),
 					'show_in_rest' => array(
 						'schema' => array(
 							'type'  => 'array',
 							'items' => array(
-								'type' => 'string',
+								'type' => 'array',
+								'items' => array(
+									'type' => 'string',
+								),
 							),
 						),
 					),
 					'default' => array(
 						'association-code' => '',
 						'association-name' => '',
-						'association-region' => '',
-						'association-province' => '',
-						'association-commune' => '',
 						'association-location' => '',
+						'association-commune' => '',
+						'association-province' => '',
+						'association-region' => '',
+						'association-website' => '',
+						'association-email' => '',
+					),
+				),
+			),
+			/**
+			 * Sports hall options
+			 */
+			array(
+				'option_group' => 'nevobo-beheer-options-group',
+				'option_name' => 'nevobo-beheer-sports-hall-data',
+				'args' => array(
+					'type' => 'array',
+					'description' => __('De gegevens betreffende de sporthal.', $this->plugin_slug),
+					'sanitize_callback' => array($this->callbacks, 'sports_hall_data_sanitize_callback'),
+					'show_in_rest' => array(
+						'schema' => array(
+							'type'  => 'array',
+							'items' => array(
+								'type' => array('string', 'integer'),
+							),
+						),
+					),
+					'default' => array(
+						'sports-hall-code' => '',
+						'sports-hall-name' => '',
+						'sports-hall-street' => '',
+						'sports-hall-house-number' => 0,
+						'sports-hall-postal-code' => '',
+						'sports-hall-location' => '',
+						'sports-hall-country' => '',
+						'sports-hall-phone-number' => '',
 					),
 				),
 			),
@@ -234,16 +269,16 @@ class Nevobo_Beheer_Admin
 		 */
 		$settings_sections = array(
 			/**
-			 * Association settings section
+			 * Nevobo codes section
 			 */
 			array(
-				'id' => 'nevobo-beheer-association-settings-section',
-				'title' => __('Verenigingsinstellingen', $this->plugin_slug),
+				'id' => 'nevobo-beheer-nevobo-codes-section',
+				'title' => __('Verenigings- en sporthalcodes', $this->plugin_slug),
 				'callback' => function () {
-					$description = esc_html(__('Vul hieronder de Nevobo verenigingscode in. Bij het opslaan van de wijzigingen zullen de overige velden automatisch worden ingevuld.', $this->plugin_slug));
-					printf('<p>%s</p>', $description);
+					$description = __('Vul hieronder de Nevobo verenigings- en sporthalcode in, welke worden gebruikt bij het ophalen van wedstrijd- en poelegegevens en bij het vaststellen van thuis- of uitwedstrijden.', $this->plugin_slug);
+					printf('<p>%s</p>', esc_html($description));
 				},
-				'page' => 'nevobo-beheer-association-settings',
+				'page' => 'nevobo-beheer-settings',
 				'args' => array(
 					// 'before_section' => '',
 					// 'after_section' => '',
@@ -282,54 +317,34 @@ class Nevobo_Beheer_Admin
 			 * Verenigingscode
 			 */
 			array(
-				'id' => 'nevobo-beheer-association-code',
+				'id' => 'nevobo-beheer-association-data-field',
 				'title' => __('Verenigingscode', $this->plugin_slug),
-				'callback' => array($this->callbacks, 'association_settings_fields_callback'),
-				'page' => 'nevobo-beheer-association-settings',
-				'section' => 'nevobo-beheer-association-settings-section',
+				'callback' => array($this->callbacks, 'nevobo_codes_field_callback'),
+				'page' => 'nevobo-beheer-settings',
+				'section' => 'nevobo-beheer-nevobo-codes-section',
 				'args' => array(
 					'label-for' => 'association-code',
 					'class' => 'nevobo-beheer-association-code regular-text',
-					'option' => 'nevobo-beheer-association-settings',
 					'type' => 'text',
-					'readonly' => false,
-					'description' => __('De Nevobo verenigingscode, welke gebruikt wordt om de competitiegegevens op te halen.', $this->plugin_slug),
+					'option-name' => 'nevobo-beheer-association-data',
+					'description' => __('De verenigingscode mag alleen uit (hoofd)letters en cijfers bestaan en is maximaal 8 karakters lang.', $this->plugin_slug),
 				),
 			),
 			/**
-			 * Verenigingsnaam
+			 * Sporthalcode
 			 */
 			array(
-				'id' => 'nevobo-beheer-association-name',
-				'title' => __('Verenigingsnaam', $this->plugin_slug),
-				'callback' => array($this->callbacks, 'association_settings_fields_callback'),
-				'page' => 'nevobo-beheer-association-settings',
-				'section' => 'nevobo-beheer-association-settings-section',
+				'id' => 'nevobo-beheer-sports-hall-data-field',
+				'title' => __('Sporthalcode', $this->plugin_slug),
+				'callback' => array($this->callbacks, 'nevobo_codes_field_callback'),
+				'page' => 'nevobo-beheer-settings',
+				'section' => 'nevobo-beheer-nevobo-codes-section',
 				'args' => array(
-					'label-for' => 'association-name',
-					'class' => 'nevobo-beheer-association-name regular-text',
-					'option' => 'nevobo-beheer-association-settings',
+					'label-for' => 'sports-hall-code',
+					'class' => 'nevobo-beheer-sports-hall-code regular-text',
 					'type' => 'text',
-					'readonly' => true,
-					'description' => __('De verenigingsnaam wordt o.a. gebruikt om vast te stellen of een team bij de betreffende vereniging hoort.', $this->plugin_slug),
-				),
-			),
-			/**
-			 * Verenigingsplaats
-			 */
-			array(
-				'id' => 'nevobo-beheer-association-location',
-				'title' => __('Verenigingsplaats', $this->plugin_slug),
-				'callback' => array($this->callbacks, 'association_settings_fields_callback'),
-				'page' => 'nevobo-beheer-association-settings',
-				'section' => 'nevobo-beheer-association-settings-section',
-				'args' => array(
-					'label-for' => 'association-location',
-					'class' => 'nevobo-beheer-association-location regular-text',
-					'option' => 'nevobo-beheer-association-settings',
-					'type' => 'text',
-					'readonly' => true,
-					'description' => __('De verenigingsplaats wordt o.a. gebruikt om vast te stellen of een wedstrijd thuis of uit gespeeld wordt.', $this->plugin_slug),
+					'option-name' => 'nevobo-beheer-sports-hall-data',
+					'description' => __('De sporthalcode is gelijk aan de naam van de sporthal waarbij een spatie moet worden vervangen door een streepje.', $this->plugin_slug),
 				),
 			),
 		);
