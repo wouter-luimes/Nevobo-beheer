@@ -187,7 +187,7 @@ class Nevobo_Beheer_Admin
 				'option_name' => 'nevobo-beheer-association-data',
 				'args' => array(
 					'type' => 'array',
-					'description' => __('De gegevens betreffende de vereniging.', $this->plugin_slug),
+					'description' => __('De gegevens van de vereniging.', $this->plugin_slug),
 					'sanitize_callback' => array($this->callbacks, 'association_data_sanitize_callback'),
 					'show_in_rest' => array(
 						'schema' => array(
@@ -220,7 +220,7 @@ class Nevobo_Beheer_Admin
 				'option_name' => 'nevobo-beheer-sports-hall-data',
 				'args' => array(
 					'type' => 'array',
-					'description' => __('De gegevens betreffende de sporthal.', $this->plugin_slug),
+					'description' => __('De gegevens van de sporthal.', $this->plugin_slug),
 					'sanitize_callback' => array($this->callbacks, 'sports_hall_data_sanitize_callback'),
 					'show_in_rest' => array(
 						'schema' => array(
@@ -269,7 +269,7 @@ class Nevobo_Beheer_Admin
 		 */
 		$settings_sections = array(
 			/**
-			 * Nevobo codes section
+			 * Nevobo association and sports hall section
 			 */
 			array(
 				'id' => 'nevobo-beheer-nevobo-codes-section',
@@ -344,7 +344,7 @@ class Nevobo_Beheer_Admin
 					'class' => 'nevobo-beheer-sports-hall-code regular-text',
 					'type' => 'text',
 					'option-name' => 'nevobo-beheer-sports-hall-data',
-					'description' => __('De sporthalcode is gelijk aan de naam van de sporthal waarbij een spatie moet worden vervangen door een streepje.', $this->plugin_slug),
+					'description' => __('De sporthalcode mag alleen uit (kleine) letters, cijfers en streepjes bestaan en is gelijk aan de naam van de sporthal waarbij een spatie vervangen dient te worden door een streepje en eventueel gevolgd dient te worden door een streepje en een getal als de naam van de sporthal niet uniek is.', $this->plugin_slug),
 				),
 			),
 		);

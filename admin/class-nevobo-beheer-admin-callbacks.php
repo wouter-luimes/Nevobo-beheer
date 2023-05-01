@@ -58,10 +58,11 @@ class Nevobo_Beheer_Admin_Callbacks
      */
     public function nevobo_codes_field_callback(array $args)
     {
-        // get the data option array
+        // get the data option array and set the unordered list and its title
         switch ($args['option-name']) {
             case 'nevobo-beheer-association-data':
                 $option = get_option('nevobo-beheer-association-data');
+                $option_title = __('Verenigingsgegevens', $this->plugin_slug);
                 $option_list = array(
                     __('Naam', $this->plugin_slug) => $option['association-name'],
                     __('Plaats', $this->plugin_slug) => $option['association-location'],
@@ -69,8 +70,12 @@ class Nevobo_Beheer_Admin_Callbacks
                 break;
             case 'nevobo-beheer-sports-hall-data':
                 $option = get_option('nevobo-beheer-sports-hall-data');
+                $option_title = __('Sporthalgegevens', $this->plugin_slug);
                 $option_list = array(
                     __('Naam', $this->plugin_slug) => $option['sports-hall-name'],
+                    __('Straat', $this->plugin_slug) => $option['sports-hall-street'],
+                    __('Huisnummer', $this->plugin_slug) => $option['sports-hall-house-number'],
+                    __('Postcode', $this->plugin_slug) => $option['sports-hall-postal-code'],
                     __('Plaats', $this->plugin_slug) => $option['sports-hall-location'],
                 );
                 break;
@@ -89,17 +94,18 @@ class Nevobo_Beheer_Admin_Callbacks
 
         // print the input form field and unordered list
         ob_start(); ?>
-
         <input name="<?= $input_name ?>" type="<?= $input_type ?>" id="<?= $input_id ?>" class="<?= $input_class ?>" value="<?= $input_value ?>" aria-describedby="<?= $input_describedby ?>">
         <p class="description" id="<?= $input_describedby ?>"><?= $input_description ?></p>
-        <ul style="margin-top:o.5rem; margin-bottom:0rem">
-            <?php foreach ($option_list as $key => $value) { ?>
-                <li><strong><?= $key ?>:&nbsp;</strong><?= empty($value) ? '–' : $value ?></li>
-            <?php } ?>
-        </ul>
+        <figure style="margin: 1em 0;">
+            <figcaption><strong><?= $option_title ?></strong></figcaption>
+            <ul style="margin: 0.5em 0">
+                <?php foreach ($option_list as $key => $value) { ?>
+                    <li><strong><?= $key ?>:&nbsp;</strong><?= empty($value) ? '–' : $value ?></li>
+                <?php } ?>
+            </ul>
+        </figure>
         <?php // print("<pre><strong>Debug:</strong>\n" . print_r($option, true) . "</pre>") ?>
-<?php
-        echo ob_get_clean();
+        <?php echo ob_get_clean();
     }
 
     /**
@@ -198,7 +204,7 @@ class Nevobo_Beheer_Admin_Callbacks
             return $output;
         }
 
-        // trim the sports hall code from the input and make it uppercase only
+        // trim the sports hall code from the input
         $sports_hall_code = sanitize_title_with_dashes(trim($input['sports-hall-code']));
 
         // the settings errors settings to display to the user in case of an error
@@ -207,7 +213,7 @@ class Nevobo_Beheer_Admin_Callbacks
 
         // check if the sports hall code matches the regex
         if (!preg_match('/^[a-z0-9-]+$/', $sports_hall_code)) {
-            $message = esc_html(__('De ingevoerde sporthalcode is ongeldig omdat deze gebruik maakt van één of meerdere ongeldige tekens. De verenigingscode mag alleen uit (hoofd)letters en cijfers bestaan en is maximaal 8 karakters lang. Geef een geldige verenigingscode op en probeer het opnieuw.', $this->plugin_slug));
+            $message = esc_html(__('De ingevoerde sporthalcode is ongeldig omdat deze gebruik maakt van één of meerdere ongeldige tekens. De sporthalcode mag alleen uit (kleine) letters, cijfers en streepjes bestaan. Geef een geldige sporthalcode op en probeer het opnieuw.', $this->plugin_slug));
             add_settings_error($error_slug, $error_id, $message, 'error');
             return $output;
         }
