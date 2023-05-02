@@ -13,6 +13,6 @@
   "author": "Wouter Luimes",
   "license": "ISC",
   "devDependencies": {
-    "@wordpress/scripts": "^26.2.0"
+    "@wordpress/scripts": "^26.3.0"
   }
 }
