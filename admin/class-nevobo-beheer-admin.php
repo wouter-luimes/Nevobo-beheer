@@ -390,43 +390,22 @@ class Nevobo_Beheer_Admin
 	}
 
 	/**
-	 * Sets the column headings displayed in the Nevobo programme post-type admin list table.
+	 * Sets the column headings displayed in the Nevobo match post-type admin list table.
 	 * 
 	 * @since      1.0.0
 	 * @param      array     $post_columns      The associative array of columns.
 	 * 
 	 */
-	public function set_nevobo_programme_column_headings(array $post_columns)
+	public function set_nevobo_match_column_headings(array $post_columns)
 	{
 		$post_columns = array(
-			'meta-nevobo-programme-team-home' => __('Thuisteam', $this->plugin_slug),
-			'meta-nevobo-programme-team-away' => __('Uitteam', $this->plugin_slug),
-			'meta-nevobo-programme-team-type' => __('Teamtype', $this->plugin_slug),
+			'meta-nevobo-match-team-home' => __('Thuisteam', $this->plugin_slug),
+			'meta-nevobo-match-team-away' => __('Uitteam', $this->plugin_slug),
+			'meta-nevobo-match-team-type' => __('Teamtype', $this->plugin_slug),
 			'taxonomy-nevobo-match-status' => __('Status', $this->plugin_slug),
-			'meta-nevobo-programme-match-location' => __('Locatie', $this->plugin_slug),
-			'meta-nevobo-programme-match-date' => __('Datum', $this->plugin_slug),
-			'meta-nevobo-programme-match-link' => __('Link', $this->plugin_slug),
-		);
-		return $post_columns;
-	}
-
-	/**
-	 * Sets the column headings displayed in the Nevobo results post-type admin list table.
-	 * 
-	 * @since      1.0.0
-	 * @param      array     $post_columns      The associative array of columns.
-	 * 
-	 */
-	public function set_nevobo_result_column_headings(array $post_columns)
-	{
-		$post_columns = array(
-			'meta-nevobo-result-team-home' => __('Thuisteam', $this->plugin_slug),
-			'meta-nevobo-result-team-away' => __('Uitteam', $this->plugin_slug),
-			'meta-nevobo-result-team-type' => __('Teamtype', $this->plugin_slug),
-			'taxonomy-nevobo-match-status' => __('Status', $this->plugin_slug),
-			'meta-nevobo-result-match-result' => __('Uitslag', $this->plugin_slug),
-			'meta-nevobo-result-match-date' => __('Datum', $this->plugin_slug),
-			'meta-nevobo-result-match-link' => __('Link', $this->plugin_slug),
+			'meta-nevobo-match-location' => __('Locatie', $this->plugin_slug),
+			'meta-nevobo-match-date' => __('Datum', $this->plugin_slug),
+			'meta-nevobo-match-link' => __('Link', $this->plugin_slug),
 		);
 		return $post_columns;
 	}

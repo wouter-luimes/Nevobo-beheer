@@ -194,11 +194,8 @@ class Nevobo_Beheer
 		// sets custom orderby query parameters when ordering based on custom meta-data in the admin list table
 		$this->loader->add_action('pre_get_posts', $plugin_admin, 'set_custom_post_columns_order');
 
-		// sets the column headings displayed in the Nevobo programme post-type admin list table
-		$this->loader->add_filter('manage_nevobo-programme_posts_columns', $plugin_admin, 'set_nevobo_programme_column_headings');
-
-		// sets the column headings displayed in the Nevobo result post-type admin list table
-		$this->loader->add_filter('manage_nevobo-result_posts_columns', $plugin_admin, 'set_nevobo_result_column_headings');
+		// sets the column headings displayed in the Nevobo match post-type admin list table
+		$this->loader->add_filter('manage_nevobo-match_posts_columns', $plugin_admin, 'set_nevobo_match_column_headings');
 
 		// enqueue the stylesheets for the admin area
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
