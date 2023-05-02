@@ -867,89 +867,96 @@ class Nevobo_Beheer_Objects
                             ),
                         )
                     ),
-                    // /**
-                    //  * Masters
-                    //  */
-                    // array(
-                    //     'slug' => 'master',
-                    //     'name' => __('Master', $this->plugin_slug),
-                    //     'children' => array(
-                    //         array(
-                    //             'slug' => 'dames-master',
-                    //             'name' => __('Dames Master', $this->plugin_slug),
-                    //             'meta' => array(
-                    //                 'nevobo-team-type' => 'DM',
-                    //             ),
-                    //         ),
-                    //         array(
-                    //             'slug' => 'heren-master',
-                    //             'name' => __('Heren Master', $this->plugin_slug),
-                    //             'meta' => array(
-                    //                 'nevobo-team-type' => 'HM',
-                    //             ),
-                    //         ),
-                    //         array(
-                    //             'slug' => 'mix-master',
-                    //             'name' => __('Mix Master', $this->plugin_slug),
-                    //             'meta' => array(
-                    //                 'nevobo-team-type' => 'XM',
-                    //             ),
-                    //         ),
-                    //     )
-                    // ),
-                    // /** 
-                    //  * Zitvolleybal
-                    //  */
-                    // array(
-                    //     'slug' => 'zitvolleybal',
-                    //     'name' => __('Zitvolleybal', $this->plugin_slug),
-                    //     'children' => array(
-                    //         array(
-                    //             'slug' => 'dames-zitvolleybal',
-                    //             'name' => __('Dames Zitvolleybal', $this->plugin_slug),
-                    //             'meta' => array(
-                    //                 'nevobo-team-type' => 'DZ',
-                    //             ),
-                    //         ),
-                    //         array(
-                    //             'slug' => 'heren-zitvolleybal',
-                    //             'name' => __('Heren Zitvolleybal', $this->plugin_slug),
-                    //             'meta' => array(
-                    //                 'nevobo-team-type' => 'HZ',
-                    //             ),
-                    //         ),
-                    //         array(
-                    //             'slug' => 'mix-zitvolleybal',
-                    //             'name' => __('Mix Zitvolleybal', $this->plugin_slug),
-                    //             'meta' => array(
-                    //                 'nevobo-team-type' => 'XZ',
-                    //             ),
-                    //         ),
-                    //     )
-                    // ),
-                    // /**
-                    //  * Onder 21
-                    //  */
-                    // array(
-                    //     'slug' => 'onder-21',
-                    //     'name' => __('Onder 21', $this->plugin_slug),
-                    //     'children' => array(
-                    //         array(
-                    //             'slug' => 'dames-21',
-                    //             'name' => __('Dames < 21', $this->plugin_slug),
-                    //             'meta' => array(
-                    //                 'nevobo-team-type' => 'DJ',
-                    //             ),
-                    //         ),
-                    //         array(
-                    //             'slug' => 'heren-21',
-                    //             'name' => __('Heren < 21', $this->plugin_slug),
-                    //             'meta' => array(
-                    //                 'nevobo-team-type' => 'HJ',
-                    //             ),
-                    //         ),
-                    //     ),
-                    // ),
+                    /**
+                     * Masters
+                     */
+                    array(
+                        'slug' => 'master',
+                        'name' => __('Master', $this->plugin_slug),
+                        'children' => array(
+                            array(
+                                'slug' => 'dames-master',
+                                'name' => __('Dames Master', $this->plugin_slug),
+                                'meta' => array(
+                                    'nevobo-team-type' => 'DM',
+                                ),
+                            ),
+                            array(
+                                'slug' => 'heren-master',
+                                'name' => __('Heren Master', $this->plugin_slug),
+                                'meta' => array(
+                                    'nevobo-team-type' => 'HM',
+                                ),
+                            ),
+                            // array(
+                            //     'slug' => 'mix-master',
+                            //     'name' => __('Mix Master', $this->plugin_slug),
+                            //     'meta' => array(
+                            //         'nevobo-team-type' => 'XM',
+                            //     ),
+                            // ),
+                        )
+                    ),
+                    /** 
+                     * Zitvolleybal
+                     */
+                    array(
+                        'slug' => 'zitvolleybal',
+                        'name' => __('Zitvolleybal', $this->plugin_slug),
+                        'children' => array(
+                            // array(
+                            //     'slug' => 'dames-zitvolleybal',
+                            //     'name' => __('Dames Zitvolleybal', $this->plugin_slug),
+                            //     'meta' => array(
+                            //         'nevobo-team-type' => 'DZ',
+                            //     ),
+                            // ),
+                            // array(
+                            //     'slug' => 'heren-zitvolleybal',
+                            //     'name' => __('Heren Zitvolleybal', $this->plugin_slug),
+                            //     'meta' => array(
+                            //         'nevobo-team-type' => 'HZ',
+                            //     ),
+                            // ),
+                            array(
+                                'slug' => 'mix-zitvolleybal',
+                                'name' => __('Mix Zitvolleybal', $this->plugin_slug),
+                                'meta' => array(
+                                    'nevobo-team-type' => 'XZ',
+                                ),
+                            ),
+                        )
+                    ),
+                    /**
+                     * Onder 21
+                     */
+                    array(
+                        'slug' => 'onder-21',
+                        'name' => __('Onder 21', $this->plugin_slug),
+                        'children' => array(
+                            array(
+                                'slug' => 'dames-21',
+                                'name' => __('Dames < 21', $this->plugin_slug),
+                                'meta' => array(
+                                    'nevobo-team-type' => 'DJ',
+                                ),
+                            ),
+                            array(
+                                'slug' => 'heren-21',
+                                'name' => __('Heren < 21', $this->plugin_slug),
+                                'meta' => array(
+                                    'nevobo-team-type' => 'HJ',
+                                ),
+                            ),
+                            // array(
+                            //     'slug' => 'mix-21',
+                            //     'name' => __('Mix < 21', $this->plugin_slug),
+                            //     'meta' => array(
+                            //         'nevobo-team-type' => 'XJ',
+                            //     ),
+                            // ),
+                        ),
+                    ),
                 )
             ),
             /**

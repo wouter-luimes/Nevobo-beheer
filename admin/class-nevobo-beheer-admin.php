@@ -420,54 +420,65 @@ class Nevobo_Beheer_Admin
 	 */
 	public function set_custom_post_column_cells(string $column_name, int $post_id)
 	{
+		$empty_string = '—';
+
+		// chech which column cell to print
 		switch ($column_name) {
 			case 'meta-nevobo-team-type':
 				$team_type = get_post_meta($post_id, 'nevobo-team-type', true);
-				// check if the team type has been set
-				if (!empty($team_type)) {
-					echo $team_type;
+				// check if the team type is empty
+				if (empty($team_type)) {
+					echo $empty_string;
 					return;
 				}
-				echo '—';
+				// default when the team type is not empty
+				echo $team_type;
 				return;
 			case 'meta-nevobo-team-serial-number':
-				$serial_number = (int)get_post_meta($post_id, 'nevobo-team-serial-number', true);
-				// check if the team serial number has been set
-				if ($serial_number > 0) {
-					echo $serial_number;
+				$team_serial_number = intval(get_post_meta($post_id, 'nevobo-team-serial-number', true));
+				// check if the team serial is empty
+				if ($team_serial_number <= 0) {
+					echo $empty_string;
 					return;
 				}
-				echo '—';
+				// default when the team serial number is higher than 0
+				echo $team_serial_number;
 				return;
 			case 'meta-nevobo-team-pool':
-				$pool = get_post_meta($post_id, 'meta-nevobo-team-pool', true);
-				// check if the team pool has been set
-				if (!empty($pool)) {
-					echo $pool;
+				$team_pool = get_post_meta($post_id, 'meta-nevobo-team-pool', true);
+				// check if the team pool is empty
+				if (empty($team_pool)) {
+					echo $empty_string;
 					return;
 				}
-				echo '—';
+				// default when the team pool is not empty
+				echo $team_pool;
 				return;
 			case 'nevobo-team-link':
 				$option = get_option('nevobo-beheer-association-data');
-				$team_meta = get_post_meta($post_id);
-				$team_type = current($team_meta['nevobo-team-type']);
-				$team_serial_number = (int)current($team_meta['nevobo-team-serial-number']);
-				// check if the team type has been set and if the team serial number is larger than 0
-				if (!empty($team_type) && $team_serial_number > 0) {
-					$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s-%s', strtolower($option['association-code']), strtolower($team_type), $team_serial_number);
-					$title = sprintf('Team %s %s %s - Volleybal competitie - Volleybal.nl', $option['association-name'], $team_type, $team_serial_number);
-					printf('<a href="%s" title="%s" target="_blank"><span class="dashicons dashicons-external"></span></a>', esc_html($link), esc_html($title));
+				// check if the association code is empty
+				if (empty($option['association-code'])) {
+					echo $empty_string;
 					return;
 				}
-				// check if the team type has been set and if the team serial number is equal to 0
-				if (!empty($team_type) && $team_serial_number === 0) {
+				$team_type = get_post_meta($post_id, 'nevobo-team-type', true);
+				// check if the team type is empty
+				if (empty($team_type)) {
+					echo $empty_string;
+					return;
+				}
+				$team_serial_number = intval(get_post_meta($post_id, 'nevobo-team-serial-number', true));
+				// check if the serial number is empty
+				if ($team_serial_number <= 0) {
 					$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s', strtolower($option['association-code']), strtolower($team_type));
 					$title = sprintf('Team %s %s - Volleybal competitie - Volleybal.nl', $option['association-name'], $team_type);
 					printf('<a href="%s" title="%s" target="_blank"><span class="dashicons dashicons-external"></span></a>', esc_html($link), esc_html($title));
-					return;
+					return;					
 				}
-				echo '—';
+				// default when serial number is higher than 0
+				$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s-%s', strtolower($option['association-code']), strtolower($team_type), $team_serial_number);
+				$title = sprintf('Team %s %s %s - Volleybal competitie - Volleybal.nl', $option['association-name'], $team_type, $team_serial_number);
+				printf('<a href="%s" title="%s" target="_blank"><span class="dashicons dashicons-external"></span></a>', esc_html($link), esc_html($title));
 				return;
 		}
 	}
@@ -483,7 +494,7 @@ class Nevobo_Beheer_Admin
 		$sortable_columns['meta-nevobo-team-type'] = 'meta-nevobo-team-type';
 		$sortable_columns['meta-nevobo-team-serial-number'] = 'meta-nevobo-team-serial-number';
 		$sortable_columns['taxonomy-nevobo-team-category'] = 'taxonomy-nevobo-team-category';
-		$sortable_columns['meta-nevobo-team-pool'] = 'meta-nevobo-team-pool';
+		// $sortable_columns['meta-nevobo-team-pool'] = 'meta-nevobo-team-pool';
 
 		return $sortable_columns;
 	}
@@ -499,6 +510,7 @@ class Nevobo_Beheer_Admin
 	{
 		switch ($post_type) {
 			case 'nevobo-team':
+			case 'nevobo-match':
 				$disable = true;
 				break;
 		}
