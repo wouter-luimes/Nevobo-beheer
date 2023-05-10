@@ -110,14 +110,14 @@ const NevoboBeheerTeamMetaPanel = () => {
      * @param {*}      newSerialNumber - The serial number to update
      */
     const setTeamSerialNumber = (newSerialNumber) => {
-        // set the team serial number to 0 if the provided serial number is an empty string
-        newSerialNumber = newSerialNumber === '' ? 0 : newSerialNumber;
-        // check if the provided serial number is an integer and if it is 0 or higher
-        if (Number.isInteger(newSerialNumber) && newSerialNumber >= 0) {
+        // set the serial number to 0 if the provided serial number is an empty string, otherwise parse it to an int
+        let serialNumber = newSerialNumber === '' ? 0 : parseInt(newSerialNumber);
+        // check if the serial number is 0 or higher
+        if (serialNumber >= 0) {
             // update the team serial number
             setMeta({
                 ...meta,
-                ['nevobo-team-serial-number']: newSerialNumber,
+                ['nevobo-team-serial-number']: serialNumber,
             });
         }
     };
