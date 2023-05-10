@@ -77,7 +77,7 @@ class Nevobo_Beheer
 
 		$this->load_dependencies();
 		$this->set_locale();
-		$this->define_object_hooks();
+		$this->define_object_type_hooks();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 	}
@@ -140,20 +140,20 @@ class Nevobo_Beheer
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_object_hooks()
+	private function define_object_type_hooks()
 	{
-		$plugin_objects = new Nevobo_Beheer_Objects($this->get_plugin_slug(), $this->get_version());
+		$plugin_object_types = new Nevobo_Beheer_Object_Types($this->get_plugin_slug(), $this->get_version());
 
 		// register custom post types and custom post meta keys
-		$this->loader->add_action('init', $plugin_objects, 'register_custom_post_types');
-		$this->loader->add_action('init', $plugin_objects, 'register_custom_post_meta_keys');
+		$this->loader->add_action('init', $plugin_object_types, 'register_custom_post_types');
+		$this->loader->add_action('init', $plugin_object_types, 'register_custom_post_meta_keys');
 
 		// register custom taxonomies and custom term meta keys
-		$this->loader->add_action('init', $plugin_objects, 'register_custom_taxonomies');
-		$this->loader->add_action('init', $plugin_objects, 'register_custom_term_meta_keys');
+		$this->loader->add_action('init', $plugin_object_types, 'register_custom_taxonomies');
+		$this->loader->add_action('init', $plugin_object_types, 'register_custom_term_meta_keys');
 
 		// insert the default custom terms
-		$this->loader->add_action('init', $plugin_objects, 'insert_custom_terms');
+		$this->loader->add_action('init', $plugin_object_types, 'insert_custom_terms');
 	}
 
 	/**

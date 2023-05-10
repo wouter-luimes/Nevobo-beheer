@@ -19,7 +19,7 @@
  * @subpackage Nevobo_Beheer/includes
  * @author     Wouter Luimes <contact@wouterluimes.nl>
  */
-class Nevobo_Beheer_Objects
+class Nevobo_Beheer_Object_Types
 {
     /**
      * The ID of this plugin.
@@ -159,7 +159,7 @@ class Nevobo_Beheer_Objects
                         'not_found' => __('Geen wedstrijden gevonden.', $this->plugin_slug),
                         'not_found_in_trash' => __('Geen wedstrijden gevonden in de prullenbak.', $this->plugin_slug),
                         'parent_item_colon' => __('Hoofdwedstrijd', $this->plugin_slug), // not used
-                        'all_items' => __('Alle wedstrijden', $this->plugin_slug), // Alle wedstrijden
+                        'all_items' => __('Alle wedstrijden', $this->plugin_slug),
                         'archives' => __('Wedstrijdenarchief', $this->plugin_slug),
                         'attributes' => __('Wedstrijdattributen', $this->plugin_slug),
                         'insert_into_item' => __('In wedstrijd invoegen', $this->plugin_slug),
@@ -181,7 +181,7 @@ class Nevobo_Beheer_Objects
                         'item_link' => __('Wedstrijdlink', $this->plugin_slug),
                         'item_link_description' => __('Een link naar een wedstrijd.', $this->plugin_slug),
                     ),
-                    'description' => __('De Nevobo-wedstrijd custom post-type', $this->plugin_slug),
+                    'description' => __('Het Nevobo-wedstrijd custom post-type', $this->plugin_slug),
                     'public' => true,
                     'hierarchical' => false,
                     'exclude_from_search' => false,
@@ -654,7 +654,7 @@ class Nevobo_Beheer_Objects
                     array(
                         'slug' => 'senioren',
                         'name' => __('Senioren', $this->plugin_slug),
-                        'children' => array(
+                        'subterms' => array(
                             array(
                                 'slug' => 'dames',
                                 'name' => __('Dames Senioren', $this->plugin_slug), // Dames
@@ -677,14 +677,14 @@ class Nevobo_Beheer_Objects
                     array(
                         'slug' => 'jeugd',
                         'name' => __('Jeugd', $this->plugin_slug),
-                        'children' => array(
+                        'subterms' => array(
                             /**
                              * Jeugd A
                              */
                             array(
                                 'slug' => 'jeugd-a',
                                 'name' => __('Jeugd A', $this->plugin_slug),
-                                'children' => array(
+                                'subterms' => array(
                                     array(
                                         'slug' => 'meisjes-a',
                                         'name' => __('Meisjes A', $this->plugin_slug),
@@ -714,7 +714,7 @@ class Nevobo_Beheer_Objects
                             array(
                                 'slug' => 'jeugd-b',
                                 'name' => __('Jeugd B', $this->plugin_slug),
-                                'children' => array(
+                                'subterms' => array(
                                     array(
                                         'slug' => 'meisjes-b',
                                         'name' => __('Meisjes B', $this->plugin_slug),
@@ -744,7 +744,7 @@ class Nevobo_Beheer_Objects
                             array(
                                 'slug' => 'jeugd-c',
                                 'name' => __('Jeugd C', $this->plugin_slug),
-                                'children' => array(
+                                'subterms' => array(
                                     array(
                                         'slug' => 'meisjes-c',
                                         'name' => __('Meisjes C', $this->plugin_slug),
@@ -776,14 +776,14 @@ class Nevobo_Beheer_Objects
                     array(
                         'slug' => 'cmv',
                         'name' => __('CMV', $this->plugin_slug),
-                        'children' => array(
+                        'subterms' => array(
                             array(
                                 'slug' => 'cmv-niveau-6',
                                 'name' => __('CMV Niveau 6', $this->plugin_slug),
                                 'meta' => array(
                                     'nevobo-team-type' => 'N6',
                                 ),
-                                'children' => array(
+                                'subterms' => array(
                                     array(
                                         'slug' => 'cmv-meisjes-niveau-6',
                                         'name' => __('CMV Meisjes Niveau 6', $this->plugin_slug),
@@ -843,7 +843,7 @@ class Nevobo_Beheer_Objects
                     array(
                         'slug' => 'recreatief',
                         'name' => __('Recreatief', $this->plugin_slug),
-                        'children' => array(
+                        'subterms' => array(
                             array(
                                 'slug' => 'dames-recreatief',
                                 'name' => __('Dames Recreatief', $this->plugin_slug),
@@ -867,43 +867,13 @@ class Nevobo_Beheer_Objects
                             ),
                         )
                     ),
-                    /**
-                     * Masters
-                     */
-                    array(
-                        'slug' => 'master',
-                        'name' => __('Master', $this->plugin_slug),
-                        'children' => array(
-                            array(
-                                'slug' => 'dames-master',
-                                'name' => __('Dames Master', $this->plugin_slug),
-                                'meta' => array(
-                                    'nevobo-team-type' => 'DM',
-                                ),
-                            ),
-                            array(
-                                'slug' => 'heren-master',
-                                'name' => __('Heren Master', $this->plugin_slug),
-                                'meta' => array(
-                                    'nevobo-team-type' => 'HM',
-                                ),
-                            ),
-                            // array(
-                            //     'slug' => 'mix-master',
-                            //     'name' => __('Mix Master', $this->plugin_slug),
-                            //     'meta' => array(
-                            //         'nevobo-team-type' => 'XM',
-                            //     ),
-                            // ),
-                        )
-                    ),
                     /** 
                      * Zitvolleybal
                      */
                     array(
                         'slug' => 'zitvolleybal',
                         'name' => __('Zitvolleybal', $this->plugin_slug),
-                        'children' => array(
+                        'subterms' => array(
                             // array(
                             //     'slug' => 'dames-zitvolleybal',
                             //     'name' => __('Dames Zitvolleybal', $this->plugin_slug),
@@ -928,12 +898,42 @@ class Nevobo_Beheer_Objects
                         )
                     ),
                     /**
+                     * Masters
+                     */
+                    array(
+                        'slug' => 'master',
+                        'name' => __('Master', $this->plugin_slug),
+                        'subterms' => array(
+                            array(
+                                'slug' => 'dames-master',
+                                'name' => __('Dames Master', $this->plugin_slug),
+                                'meta' => array(
+                                    'nevobo-team-type' => 'DM',
+                                ),
+                            ),
+                            array(
+                                'slug' => 'heren-master',
+                                'name' => __('Heren Master', $this->plugin_slug),
+                                'meta' => array(
+                                    'nevobo-team-type' => 'HM',
+                                ),
+                            ),
+                            // array(
+                            //     'slug' => 'mix-master',
+                            //     'name' => __('Mix Master', $this->plugin_slug),
+                            //     'meta' => array(
+                            //         'nevobo-team-type' => 'XM',
+                            //     ),
+                            // ),
+                        )
+                    ),
+                    /**
                      * Onder 21
                      */
                     array(
                         'slug' => 'onder-21',
                         'name' => __('Onder 21', $this->plugin_slug),
-                        'children' => array(
+                        'subterms' => array(
                             array(
                                 'slug' => 'dames-21',
                                 'name' => __('Dames < 21', $this->plugin_slug),
@@ -1040,10 +1040,10 @@ class Nevobo_Beheer_Objects
             }
         }
 
-        // check if the current term has children 
-        if (array_key_exists('children', current($terms))) {
-            // recursively insert the children terms array with the just inserted term id as its parent
-            $this->insert_custom_terms_recursively($taxonomy, current($terms)['children'], $term_id);
+        // check if the current term has subterms 
+        if (array_key_exists('subterms', current($terms))) {
+            // recursively insert the subterms array with the just inserted term id as its parent
+            $this->insert_custom_terms_recursively($taxonomy, current($terms)['subterms'], $term_id);
         }
 
         // remove the inserted term off the terms array
