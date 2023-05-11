@@ -1010,7 +1010,7 @@ class Nevobo_Beheer_Object_Types
      * @since    1.0.0
      * @access   private
      * @param    string     $taxonomy       The slug of the taxonomy to which to add the term.
-     * @param    array      $terms          The associative array of terms to add, where the key is the slug and the value is the name of the term.
+     * @param    array      $terms          The associative array of terms to add.
      * @param    int        $parent         The id of the parent term. Default is 0 when there is no parent term.
      */
     private function insert_custom_terms_recursively(string $taxonomy, array $terms, int $parent = 0)

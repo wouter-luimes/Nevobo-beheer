@@ -200,7 +200,7 @@ class Nevobo_Beheer
 		// enqueue the stylesheets for the admin area
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 
-		// enqueue the block editor assets
+		// enqueue the nevobo team block editor assets
 		$this->loader->add_action('enqueue_block_editor_assets', $plugin_admin, 'enqueue_nevobo_team_block_editor_assets');
 
 		// enqueue the javascript for the admin area

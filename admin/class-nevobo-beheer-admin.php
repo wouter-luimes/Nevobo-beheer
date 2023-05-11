@@ -615,19 +615,19 @@ class Nevobo_Beheer_Admin
 	}
 
 	/**
-	 * Fires after block editor assets have been enqueued for the editing interface
+	 * Register the Nevobo-team block editor assets.
 	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_nevobo_team_block_editor_assets()
 	{
-		// check if the loaded post-type is the nevobo-team post-type, if not return
+		// check if the loaded post-type is the Nevobo-team post-type, if not return
 		if (get_post_type() !== 'nevobo-team') {
 			return;
 		}
 
 		// check if there are dependencies that need to be loaded
-		$path = plugin_dir_path(__FILE__) . 'block-editor/index.asset.php';
+		$path = plugin_dir_path(__FILE__) . 'block-editor-assets/index.asset.php';
 		if (file_exists($path)) {
 			$asset = require $path;
 		} else {
@@ -636,8 +636,8 @@ class Nevobo_Beheer_Admin
 
 		// enqueue the script
 		wp_enqueue_script(
-			'nevobo-beheer-block-editor-assets',
-			plugin_dir_url(__FILE__) . '/block-editor/index.js',
+			'nevobo-beheer-team-block-editor-assets',
+			plugin_dir_url(__FILE__) . '/block-editor-assets/index.js',
 			$asset['dependencies'],
 			$asset['version'],
 			true,
