@@ -102,8 +102,8 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ teamMembers: newTeamMembers });
 	};
 
-	console.log('getSelectedBlock: ');
-	console.log(select('core/block-editor').getSelectedBlock());
+	// console.log('getSelectedBlock: ');
+	// console.log(select('core/block-editor').getSelectedBlock());
 	// console.log('isBlockSelected: ' + isBlockSelected);
 	// console.log('isBlockHighlighted: ' + select('core/block-editor').isBlockHighlighted);
 

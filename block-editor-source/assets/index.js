@@ -127,9 +127,9 @@ const RenderNevoboTeamPanels = () => {
     return (
         <>
             <PluginDocumentSettingPanel
-                name={nevobo-team-meta-panel}
+                name={'nevobo-team-meta-panel'}
                 title={__('Teamgegevens', 'nevobo-beheer')}
-                className={nevobo-team-meta-panel}
+                className={'nevobo-team-meta-panel'}
             >
                 <SelectControl
                     label={__('Teamtype', 'nevobo-beheer')}
