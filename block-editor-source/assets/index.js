@@ -10,13 +10,6 @@ import { __experimentalNumberControl as NumberControl, SelectControl } from '@wo
 import { decodeEntities } from '@wordpress/html-entities';
 
 /**
- * The plugin slug, panel slugs and full panel names
- */
-const pluginSlug = 'nevobo-beheer';
-const metaPanelSlug = 'nevobo-team-meta-panel';
-const metaPanelName = `${pluginSlug}/${metaPanelSlug}`;
-
-/**
  * Registers the custom Nevobo-team panels to the editor
  */
 const RenderNevoboTeamPanels = () => {
@@ -49,7 +42,7 @@ const RenderNevoboTeamPanels = () => {
         // Check if the category terms array has already been loaded
         if (teamCategoryTerms !== null) {
             // Add option when no Nevobo-team type has been selected yet
-            options.push({ value: '', label: __('Selecteer het teamtype', pluginSlug) });
+            options.push({ value: '', label: __('Selecteer het teamtype', 'nevobo-beheer') });
             // Filter the Nevobo-team catogory terms array which dont have a Nevobo-team type set
             let terms = teamCategoryTerms.filter(term => term.meta['nevobo-team-type'] !== '');
             // Maps the terms array with the correct value and label
@@ -58,17 +51,10 @@ const RenderNevoboTeamPanels = () => {
             options = [...options, ...terms];
         } else {
             // Add the is loading option when the category terms array has not been loaded yet
-            options.push({ value: '', label: __('Teamtype laden...', pluginSlug), disabled: true });
+            options.push({ value: '', label: __('Teamtype laden...', 'nevobo-beheer'), disabled: true });
         }
         return options;
     })();
-
-    /**
-    * A helper function for getting the Nevobo-team type string
-    *
-    * @return {string} - If the Nevobo-team category terms array is still null then return an empty string, otherwise the Nevobo-team type string
-    */
-    const getTeamType = () => (teamCategoryTerms === null ? '' : meta['nevobo-team-type']);
 
     /**
     * A helper function for updating the Nevobo-team type and Nevobo-team categories
@@ -80,7 +66,7 @@ const RenderNevoboTeamPanels = () => {
         if (!teamTypeOptions.some((option) => option.value === newTeamType)) {
             // Show a warning
             dispatch('core/notices').createWarningNotice(
-                __('Het geselecteerde teamtype is ongeldig. Selecteer een geldig teamtype en probeer het opnieuw.', pluginSlug)
+                __('Het geselecteerde teamtype is ongeldig. Selecteer een geldig teamtype en probeer het opnieuw.', 'nevobo-beheer')
             );
             return;
         }
@@ -111,13 +97,6 @@ const RenderNevoboTeamPanels = () => {
     }
 
     /**
-    * A helper function for getting the Nevobo-team serial number
-    *
-    * @return {*} - If the serial number is 0 then return an empty string, otherwise the serial number integer
-    */
-    const getTeamSerialNumber = () => (meta['nevobo-team-serial-number'] === 0) ? '' : meta['nevobo-team-serial-number'];
-
-    /**
      * A helper function for updating the Nevobo-team serial number
      *
      * @param {*}      newSerialNumber - The serial number to update
@@ -130,7 +109,7 @@ const RenderNevoboTeamPanels = () => {
         if (isNaN(serialNumber) || serialNumber < 0) {
             // Show a warning
             dispatch('core/notices').createWarningNotice(
-                __('Het ingevoerde volgnummer is ongeldig. Vul een geldig volgnummer in en probeer het opnieuw.', pluginSlug)
+                __('Het ingevoerde volgnummer is ongeldig. Vul een geldig volgnummer in en probeer het opnieuw.', 'nevobo-beheer')
             );
             return;
         }
@@ -146,46 +125,58 @@ const RenderNevoboTeamPanels = () => {
      * Returning the custom Nevobo-team panels
      */
     return (
-        <PluginDocumentSettingPanel
-            name={metaPanelSlug}
-            title={__('Teamgegevens', pluginSlug)}
-            className={metaPanelSlug}
-        >
-            <SelectControl
-                label={__('Teamtype', pluginSlug)}
-                value={getTeamType()}
-                options={teamTypeOptions}
-                onChange={(value) => setTeamType(value)}
-                labelPosition={'top'}
-                multiple={false}
-            />
-            <NumberControl
-                label={__('Volgnummer', pluginSlug)}
-                value={getTeamSerialNumber()}
-                onChange={(value) => setTeamSerialNumber(value)}
-                labelPosition={'side'}
-                help={__('Bijvoorbeeld \'1\' voor het team Dames 1.', pluginSlug)}
-                min={0}
-                spinControl={'native'}
-                isDragEnabled={false}
-                isShiftStepEnabled={false}
-            />
-        </PluginDocumentSettingPanel>
+        <>
+            <PluginDocumentSettingPanel
+                name={nevobo-team-meta-panel}
+                title={__('Teamgegevens', 'nevobo-beheer')}
+                className={nevobo-team-meta-panel}
+            >
+                <SelectControl
+                    label={__('Teamtype', 'nevobo-beheer')}
+                    value={teamCategoryTerms === null ? '' : meta['nevobo-team-type']}
+                    options={teamTypeOptions}
+                    onChange={(value) => setTeamType(value)}
+                    labelPosition={'top'}
+                    multiple={false}
+                />
+                <NumberControl
+                    label={__('Volgnummer', 'nevobo-beheer')}
+                    value={meta['nevobo-team-serial-number'] === 0 ? '' : meta['nevobo-team-serial-number']}
+                    onChange={(value) => setTeamSerialNumber(value)}
+                    labelPosition={'side'}
+                    help={__('Bijvoorbeeld \'1\' voor het team Dames 1.', 'nevobo-beheer')}
+                    min={0}
+                    spinControl={'native'}
+                    isDragEnabled={false}
+                    isShiftStepEnabled={false}
+                />
+            </PluginDocumentSettingPanel>
+            <PluginDocumentSettingPanel
+                name={'nevobo-team-pool-panel'}
+                title={__('Poulegegevens', 'nevobo-beheer')}
+                className={'nevobo-team-pool-panel'}
+            >
+                <p>To-do</p>
+            </PluginDocumentSettingPanel>
+
+        </>
     );
 };
-registerPlugin(pluginSlug, {
+registerPlugin('nevobo-beheer', {
     render: RenderNevoboTeamPanels,
 });
-
-/**
- * Check if the Nevobo-team meta panel is set to closed
- */
-if (!select('core/edit-post').isEditorPanelOpened(metaPanelName)) {
-    // Set the Nevobo-team meta panel to open
-    dispatch('core/edit-post').toggleEditorPanelOpened(metaPanelName);
-}
 
 /**
  * Remove the Nevobo-team category select panel
  */
 dispatch('core/edit-post').removeEditorPanel('taxonomy-panel-nevobo-team-category');
+
+/**
+ * Set the the Nevobo-team meta panel open by default if it is closed
+ */
+select('core/edit-post').isEditorPanelOpened('nevobo-beheer/nevobo-team-meta-panel') || dispatch('core/edit-post').toggleEditorPanelOpened('nevobo-beheer/nevobo-team-meta-panel');
+
+/**
+ * Set the the Nevobo-team pool panel open by default if it is closed
+ */
+select('core/edit-post').isEditorPanelOpened('nevobo-bheer/nevobo-team-pool-panel') || dispatch('core/edit-post').toggleEditorPanelOpened('nevobo-bheer/nevobo-team-pool-panel');

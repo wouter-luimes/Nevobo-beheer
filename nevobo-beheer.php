@@ -16,7 +16,7 @@
  * Plugin Name:       Nevobo team- en competitiebeheer
  * Plugin URI:        https://www.wouterluimes.nl/nevobo-beheer
  * Description:       Een Wordpress plug-in waarmee team- en competitiegegevens, waaronder standen, uitslagen en het programma van Nederlandse volleybalteams beheerd kunnen worden.
- * Version:           0.1.0
+ * Version:           1.0.0
  * Author:            Wouter Luimes
  * Author URI:        https://www.wouterluimes.nl
  * License:           GPL-2.0+

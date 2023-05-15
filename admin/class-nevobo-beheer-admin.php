@@ -473,7 +473,7 @@ class Nevobo_Beheer_Admin
 					$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s', strtolower($option['association-code']), strtolower($team_type));
 					$title = sprintf('Team %s %s - Volleybal competitie - Volleybal.nl', $option['association-name'], $team_type);
 					printf('<a href="%s" title="%s" target="_blank"><span class="dashicons dashicons-external"></span></a>', esc_html($link), esc_html($title));
-					return;					
+					return;
 				}
 				// default when serial number is higher than 0
 				$link = sprintf('https://www.volleybal.nl/competitie/team/%s-%s-%s', strtolower($option['association-code']), strtolower($team_type), $team_serial_number);
@@ -627,7 +627,8 @@ class Nevobo_Beheer_Admin
 		}
 
 		// check if there are dependencies that need to be loaded
-		$path = plugin_dir_path(__FILE__) . 'block-editor-assets/index.asset.php';
+		$path = plugin_dir_path(__DIR__) . 'block-editor/assets/index.asset.php';
+
 		if (file_exists($path)) {
 			$asset = require $path;
 		} else {
@@ -637,11 +638,22 @@ class Nevobo_Beheer_Admin
 		// enqueue the script
 		wp_enqueue_script(
 			'nevobo-beheer-team-block-editor-assets',
-			plugin_dir_url(__FILE__) . '/block-editor-assets/index.js',
+			plugin_dir_url(__DIR__) . 'block-editor/assets/index.js',
 			$asset['dependencies'],
 			$asset['version'],
 			true,
 		);
+	}
+
+	/**
+	 * Register the Nevobo-team member list block type using the metadata loaded from the `block.json` file.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_nevobo_team_member_list_block_type()
+	{
+		// register the block type
+		register_block_type(plugin_dir_path(__DIR__) . '/block-editor/blocks/nevobo-team-member-list');
 	}
 
 	// /**

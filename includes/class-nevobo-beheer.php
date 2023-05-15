@@ -203,6 +203,9 @@ class Nevobo_Beheer
 		// enqueue the nevobo team block editor assets
 		$this->loader->add_action('enqueue_block_editor_assets', $plugin_admin, 'enqueue_nevobo_team_block_editor_assets');
 
+		// register the nevobo team member list block type
+		$this->loader->add_action('init', $plugin_admin, 'register_nevobo_team_member_list_block_type');
+
 		// enqueue the javascript for the admin area
 		// $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 	}
