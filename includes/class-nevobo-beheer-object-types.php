@@ -124,7 +124,7 @@ class Nevobo_Beheer_Object_Types
                     // 'capability_type' => 'post',
                     // 'capabilities' => array(),
                     // 'map_meta_cap' => false,
-                    'supports' => array('title', 'editor', 'custom-fields'), // 'post-formats'), // 'thumbnail', 'revisions',
+                    'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'), // 'post-formats'), // 'thumbnail', 'revisions',
                     // 'register_meta_box_cb' => function(){},
                     'taxonomies' => array('nevobo-team-category'),
                     'has_archive' => false,
@@ -135,8 +135,12 @@ class Nevobo_Beheer_Object_Types
                     // 'query_var' => '',
                     'can_export' => true,
                     'delete_with_user' => false,
-                    // 'template' => [],
-                    // 'template_lock' => false,
+                    'template' => array(
+                        // array('core/post-featured-image'),
+                        array('nevobo-beheer/nevobo-team-members'),
+                        array('nevobo-beheer/nevobo-team-competition-tabs')
+                    ),
+                    'template_lock' => 'all',
                 )
             ),
             /**

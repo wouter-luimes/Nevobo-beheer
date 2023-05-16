@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "nevobo-beheer/nevobo-team-competition-tabs",
+	"version": "1.0.0",
+	"title": "Competitie tabbladen",
+	"category": "widgets",
+	"icon": "list-view",
+	"description": "Tabbladen voor het weergeven van competitiegegevens.",
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"textdomain": "nevobo-beheer",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

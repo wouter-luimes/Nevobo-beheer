@@ -1,15 +1,15 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
-	"name": "nevobo-beheer/nevobo-team-member-list",
+	"name": "nevobo-beheer/nevobo-team-members",
 	"version": "1.0.0",
 	"title": "Teamleden",
-	"category": "text",
+	"category": "widgets",
 	"icon": "list-view",
 	"description": "Maak een lijst met teamleden.",
 	"supports": {
 		"html": false,
-		"multiple": true
+		"multiple": false
 	},
 	"textdomain": "nevobo-beheer",
 	"attributes": {

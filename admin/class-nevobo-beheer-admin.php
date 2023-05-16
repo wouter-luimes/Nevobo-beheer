@@ -383,7 +383,7 @@ class Nevobo_Beheer_Admin
 			'meta-nevobo-team-type' => __('Teamtype', $this->plugin_slug),
 			'meta-nevobo-team-serial-number' => __('Volgnummer', $this->plugin_slug),
 			'taxonomy-nevobo-team-category' => __('Teamcatgorieën', $this->plugin_slug),
-			'meta-nevobo-team-pool' => __('Poule\'s', $this->plugin_slug),
+			// 'meta-nevobo-team-pool' => __('Poule\'s', $this->plugin_slug),
 			'nevobo-team-link' => __('Link', $this->plugin_slug),
 		);
 		return $post_columns;
@@ -646,14 +646,25 @@ class Nevobo_Beheer_Admin
 	}
 
 	/**
-	 * Register the Nevobo-team member list block type using the metadata loaded from the `block.json` file.
+	 * Register the Nevobo-team members block type using the metadata loaded from the `block.json` file.
 	 *
 	 * @since    1.0.0
 	 */
-	public function register_nevobo_team_member_list_block_type()
+	public function register_nevobo_team_members_block_type()
 	{
 		// register the block type
-		register_block_type(plugin_dir_path(__DIR__) . '/block-editor/blocks/nevobo-team-member-list');
+		register_block_type(plugin_dir_path(__DIR__) . '/block-editor/blocks/nevobo-team-members');
+	}
+
+	/**
+	 * Register the Nevobo-team competition tabs block type using the metadata loaded from the `block.json` file.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_nevobo_team_competition_tabs_block_type()
+	{
+		// register the block type
+		register_block_type(plugin_dir_path(__DIR__) . '/block-editor/blocks/nevobo-team-competition-tabs');
 	}
 
 	// /**
