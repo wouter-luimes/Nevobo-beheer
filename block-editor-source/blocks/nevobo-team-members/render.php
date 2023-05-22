@@ -13,19 +13,19 @@
 	<span>Spelers:</span>
 	<ul style="list-style-type: none">
 		<?php foreach ($attributes['teamMembers'] as $team_member) {
-			if (in_array($team_member['type'], array('speler', 'aanvoerder', 'libero', 'mee-trainer'))) {
+			if (in_array($team_member['role'], array('speler', 'aanvoerder', 'libero', 'mee-trainer'))) {
 				ob_start(); ?>
-				<li><?= $team_member['number'] ?>. <?= $team_member['name'] ?> (<?= $team_member['type'] ?>)</li>
+				<li><?= $team_member['number'] ?>. <?= $team_member['name'] ?> (<?= $team_member['role'] ?>)</li>
 		<?php echo ob_get_clean();
 			}
 		} ?>
 	</ul>
-	<span>Coach/trainer:</span>
+	<span>Staf:</span>
 	<ul style="list-style-type: none">
 		<?php foreach ($attributes['teamMembers'] as $team_member) {
-			if (in_array($team_member['type'], array('coach-en-trainer', 'coach', 'trainer'))) {
+			if (in_array($team_member['role'], array('coach-en-trainer', 'coach', 'trainer'))) {
 				ob_start(); ?>
-				<li><?= $team_member['name'] ?> (<?= $team_member['type'] ?>)</li>
+				<li><?= $team_member['name'] ?> (<?= $team_member['role'] ?>)</li>
 		<?php echo ob_get_clean();
 			}
 		} ?>

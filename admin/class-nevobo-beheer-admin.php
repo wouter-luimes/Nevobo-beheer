@@ -401,10 +401,10 @@ class Nevobo_Beheer_Admin
 		$post_columns = array(
 			'meta-nevobo-match-team-home' => __('Thuisteam', $this->plugin_slug),
 			'meta-nevobo-match-team-away' => __('Uitteam', $this->plugin_slug),
-			'meta-nevobo-match-team-type' => __('Teamtype', $this->plugin_slug),
 			'taxonomy-nevobo-match-status' => __('Status', $this->plugin_slug),
-			'meta-nevobo-match-location' => __('Locatie', $this->plugin_slug),
 			'meta-nevobo-match-date' => __('Datum', $this->plugin_slug),
+			'meta-nevobo-match-location' => __('Locatie', $this->plugin_slug),
+			'meta-nevobo-match-result' => __('Uitslag', $this->plugin_slug),
 			'meta-nevobo-match-link' => __('Link', $this->plugin_slug),
 		);
 		return $post_columns;

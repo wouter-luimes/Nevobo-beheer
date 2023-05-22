@@ -130,6 +130,7 @@ const RenderNevoboTeamPanels = () => {
                 name={'nevobo-team-meta-panel'}
                 title={__('Teamgegevens', 'nevobo-beheer')}
                 className={'nevobo-team-meta-panel'}
+                opened={true}
             >
                 <SelectControl
                     label={__('Teamtype', 'nevobo-beheer')}
@@ -155,6 +156,7 @@ const RenderNevoboTeamPanels = () => {
                 name={'nevobo-team-pool-panel'}
                 title={__('Poulegegevens', 'nevobo-beheer')}
                 className={'nevobo-team-pool-panel'}
+                opened={true}
             >
                 <p>To-do</p>
             </PluginDocumentSettingPanel>

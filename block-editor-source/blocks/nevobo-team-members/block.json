@@ -9,7 +9,10 @@
 	"description": "Maak een lijst met teamleden.",
 	"supports": {
 		"html": false,
-		"multiple": false
+		"inserter": false,
+		"multiple": false,
+		"reusable": false,
+		"lock": false
 	},
 	"textdomain": "nevobo-beheer",
 	"attributes": {
@@ -22,15 +25,15 @@
 				"name": {
 					"type": "string"
 				},
-				"type": {
+				"role": {
 					"type": "string"
 				}
 			},
 			"default": [
 				{
 					"number": 1,
-					"name": "",
-					"type": "speler"
+					"name": null,
+					"role": "speler"
 				}
 			]
 		}

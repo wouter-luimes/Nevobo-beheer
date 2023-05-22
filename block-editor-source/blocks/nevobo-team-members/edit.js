@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { useBlockProps } from '@wordpress/block-editor';
-import { Placeholder, Flex, FlexBlock, FlexItem, __experimentalNumberControl as NumberControl, TextControl, SelectControl, FormToggle, Button } from '@wordpress/components';
+import { Placeholder, Flex, FlexItem, FlexBlock, __experimentalNumberControl as NumberControl, TextControl, SelectControl, Button } from '@wordpress/components';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -15,10 +15,9 @@ import { Placeholder, Flex, FlexBlock, FlexItem, __experimentalNumberControl as 
  */
 export default function Edit({ attributes, setAttributes }) {
 	/**
-	 * An array of team member type options for the select control element. 
-	 * Todo: positie? (midden, buiten, dia, spel, libero, etc.)
-	*/
-	const teamMemberTypeOptions = [
+	 * An array of team member role options for the select control element.
+	 */
+	const teamMemberRoleOptions = [
 		{ value: 'speler', label: 'Speler' },
 		{ value: 'aanvoerder', label: 'Aanvoerder' },
 		{ value: 'libero', label: 'Libero' },
@@ -31,24 +30,62 @@ export default function Edit({ attributes, setAttributes }) {
 		// 	{ value: 'arts', label: 'Arts' },
 		// 	{ value: 'verzorger', label: 'Verzorger' },
 		// 	{ value: 'fysiotherapeut', label: 'Fysiotherapeut' },
-		// 	{ value: 'scheidsrechterbeoordelaar', label: 'Scheidsrechterbeoordelaar' },
 		// 	{ value: 'manager', label: 'Manager' },
 	];
 
 	/**
-	 * A helper function for checking if a team member is playing competition.
-	 * In other words, should a number be assigned to this player or not?
-	 * 
-	 * @param {string} type - The team member type to check.
-	 * @return {boolean} - If the type is a competition player.
+	 * An array of team member role options
 	 */
-	const isCompetitionPlayer = (type) => {
-		return ['speler', 'aanvoerder', 'libero'].includes(String(type));
+	// const teamMemberRoleOptions = [
+	// 	{ value: 'speler', label: 'Speler' },
+	// 	{ value: 'aanvoerder', label: 'Aanvoerder' }, // niet officieel maar wel makkelijk hier
+	// 	{ value: 'staf', label: 'Staf' },
+	// ];
+
+	/**
+	 * An array of team member player type options for the select control element.
+	 */
+	// const teamMemberPlayerTypeOptions = [
+	// 	{ value: 'onbepaald', label: 'Onbepaald' }, // on/niet-gespecificeerd? on/niet-bepaald? on/niet-bekend? on/niet-gedefinieerd?
+	// 	{ value: 'spelverdeler', label: 'Spelverdeler' },
+	// 	{ value: 'midden', label: 'Midden' },
+	// 	{ value: 'buiten', label: 'Buiten' },
+	// 	{ value: 'diagonaal', label: 'Diagonaal' },
+	// 	{ value: 'libero', label: 'Libero' },
+	// 	{ value: 'gevarieerd', label: 'Gevarieerd' }, // afwisselend? veelzijdig? gevarieerd? afwisselend? verscheiden? algemeen?
+	// 	{ value: 'mee-trainer', label: 'Mee-trainer' },
+	// ];
+
+	/**
+	 * An array of team member staf options for the select control element.
+	 */
+	// const teamMemberStafTypeOptions = [ // begeleiding? staf?
+	// 	{ value: 'onbepaald', label: 'Onbepaald' },
+	// 	{ value: 'coach-en-trainer', label: 'Coach & Trainer' },
+	// 	{ value: 'coach', label: 'Coach' },
+	// 	{ value: 'assistent-coach', label: 'Assistent Coach' },
+	// 	{ value: 'trainer', label: 'Trainer' },
+	// 	{ value: 'assistent-trainer', label: 'Assistent Trainer' },
+	// 	{ value: 'arts', label: 'Arts' },
+	// 	{ value: 'verzorger', label: 'Verzorger' },
+	// 	{ value: 'fysiotherapeut', label: 'Fysiotherapeut' },
+	// 	{ value: 'manager', label: 'Manager' },
+	// ];
+
+	/**
+	 * A helper function for checking if a team member is playing competition.
+	 * In other words, check if a number should be assigned to this player or not.
+	 * 
+	 * @param {string} role - The team member role to check.
+	 * @return {boolean} - If the role is a competition player.
+	 */
+	const isCompetitionPlayer = (role) => {
+		return ['speler', 'aanvoerder', 'libero'].includes(String(role));
 	};
 
 	/**
-	 * A helper function for returning the highest team member number.
-	 * If there are no items in the array it returns 0.
+	 * A helper function that returns the highest team member number.
+	 * If there are no team members it returns 0.
 	 * 
 	 * @returns {int} - The highest team member number.
 	 */
@@ -85,21 +122,21 @@ export default function Edit({ attributes, setAttributes }) {
 	};
 
 	/**
-	 * A helper function for setting the team member type.
+	 * A helper function for setting the team member role.
 	 * 
-	 * @param {string} type - The team member type.
+	 * @param {string} role - The team member role.
 	 * @param {index} index - The index of the team member.
 	 */
-	const setTeamMemberType = (type, index) => {
+	const setTeamMemberRole = (role, index) => {
 		// Todo: validation and error handling
 		let newTeamMembers = [...attributes.teamMembers];
-		newTeamMembers[index].type = String(type);
+		newTeamMembers[index].role = String(role);
 		// check if the team member is set to a competition player and if the current number is 0 
-		if (isCompetitionPlayer(String(type)) && newTeamMembers[index].number === 0) {
+		if (isCompetitionPlayer(String(role)) && newTeamMembers[index].number === 0) {
 			newTeamMembers[index].number = getHighestTeamMemberNumber() + 1;
 		}
 		// check if the team member is not a competition player but the number has been set already
-		if (!isCompetitionPlayer(String(type))) {
+		if (!isCompetitionPlayer(String(role))) {
 			newTeamMembers[index].number = 0;
 		}
 		setAttributes({ teamMembers: newTeamMembers });
@@ -109,7 +146,7 @@ export default function Edit({ attributes, setAttributes }) {
 	 * A helper function to add a team member.
 	 */
 	const addTeamMember = () => {
-		let newTeamMembers = attributes.teamMembers.concat([{ number: getHighestTeamMemberNumber() + 1, name: null, type: 'speler' }]);
+		let newTeamMembers = attributes.teamMembers.concat([{ number: getHighestTeamMemberNumber() + 1, name: '', role: 'speler' }]);
 		setAttributes({ teamMembers: newTeamMembers });
 	};
 
@@ -124,6 +161,22 @@ export default function Edit({ attributes, setAttributes }) {
 	};
 
 	/**
+	 * A helper function to sort the team members.
+	 */
+	const sortTeamMember = () => {
+		let newTeamMembers = [
+			// sort competition players on their number first, then on their name
+			...attributes.teamMembers.filter((member) => isCompetitionPlayer(member.role)).sort((a, b) => a.number !== b.number ? a.number - b.number : a.name.localeCompare(b.name)),
+			// sort the other members based on their name
+			...attributes.teamMembers.filter((member) => member.role === 'mee-trainer').sort((a, b) => a.name > b.name ? 1 : -1),
+			...attributes.teamMembers.filter((member) => member.role === 'coach-en-trainer').sort((a, b) => a.name > b.name ? 1 : -1),
+			...attributes.teamMembers.filter((member) => member.role === 'coach').sort((a, b) => a.name > b.name ? 1 : -1),
+			...attributes.teamMembers.filter((member) => member.role === 'trainer').sort((a, b) => a.name > b.name ? 1 : -1),
+		];
+		setAttributes({ teamMembers: newTeamMembers });
+	};
+
+	/**
 	 * Returning the custom block
 	 */
 	return (
@@ -131,7 +184,7 @@ export default function Edit({ attributes, setAttributes }) {
 			<Placeholder
 				label={__('Teamleden', 'nevobo-beheer')}
 				icon='list-view'
-				instructions={__('Voer hier (indien van toepassing) het nummer, de naam en het type van alle teamleden in.', 'nevobo-beheer')}
+				instructions={__('Voer hier (indien van toepassing) het nummer, de naam en de rol van alle teamleden in.', 'nevobo-beheer')}
 				isColumnLayout={true}
 			>
 				{attributes.teamMembers.map((member, index) => {
@@ -142,12 +195,12 @@ export default function Edit({ attributes, setAttributes }) {
 									label={index === 0 && __('Nummer', 'nevobo-beheer')}
 									value={member.number === 0 ? '' : member.number}
 									onChange={(value) => setTeamMemberNumber(value, index)}
-									disabled={!isCompetitionPlayer(member.type)}
+									disabled={!isCompetitionPlayer(member.role)}
 									min={0}
 									spinControls={'native'}
 									isDragEnabled={false}
 									isShiftStepEnabled={false}
-									style={{ width: '5em' }}
+									style={{ width: '60px' }}
 								/>
 							</FlexItem>
 							<FlexBlock>
@@ -157,33 +210,26 @@ export default function Edit({ attributes, setAttributes }) {
 									type='text'
 									placeholder={__('Voor-en achternaam', 'nevobo-beheer')}
 									onChange={(value) => setTeamMemberName(value, index)}
-									autoFocus={member.name === null}
+									autoFocus={member.name === ''}
 								/>
 							</FlexBlock>
 							<FlexItem>
 								<SelectControl
-									label={index === 0 && __('Type', 'nevobo-beheer')}
-									value={member.type}
-									options={teamMemberTypeOptions}
-									onChange={(value) => setTeamMemberType(value, index)}
+									label={index === 0 && __('Rol', 'nevobo-beheer')}
+									value={member.role}
+									options={teamMemberRoleOptions}
+									onChange={(value) => setTeamMemberRole(value, index)}
 									multiple={false}
 								/>
 							</FlexItem>
 							{/* <FlexItem>
-								<Flex direction='column' align='flex-start'>
-									<label
-										data-wp-component="Text"
-										for="inspector-form-toggle-0"
-										class="components-truncate components-text components-form-toggle__label css-1imalal"
-										style={{ marginBottom: '6px' }}>
-										{__('Aanvoerder', 'nevobo-beheer')}
-									</label>
-									<FormToggle
-										onChange={function noRefCheck() { }}
-										checked={true}
-										disabled={false}										
-									/>
-								</Flex>
+								<SelectControl
+									label={index === 0 && __('Positie', 'nevobo-beheer')}
+									value={member.position}
+									options={teamMemberPositionOptions}
+									onChange={(value) => setTeamMemberPosition(value, index)}
+									multiple={false}
+								/>
 							</FlexItem> */}
 							<FlexItem>
 								<Button
@@ -197,12 +243,16 @@ export default function Edit({ attributes, setAttributes }) {
 						</Flex>
 					)
 				})}
-				<FlexItem>
+				<FlexItem style={{ marginTop: '1em' }}>
 					<Button
 						text={__('Voeg teamlid toe', 'nevobo-beheer')}
 						onClick={() => addTeamMember()}
 						variant="primary"
-						style={{ marginTop: '1em' }}
+					/>
+					<Button
+						text={__('Sorteer teamleden', 'nevobo-beheer')}
+						onClick={() => sortTeamMember()}
+						variant="secondary"
 					/>
 				</FlexItem>
 			</Placeholder>

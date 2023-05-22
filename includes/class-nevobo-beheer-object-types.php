@@ -256,6 +256,10 @@ class Nevobo_Beheer_Object_Types
          */
         $post_meta_keys = array(
             /**
+             * ================================================================
+             *                               Team
+             * ================================================================
+             * 
              * Team - teamtype
              */
             array(
@@ -289,7 +293,10 @@ class Nevobo_Beheer_Object_Types
                     'show_in_rest' => true,
                 ),
             ),
-            /**
+            /** 
+             * ================================================================
+             *                               Match
+             * ================================================================
              * 
              * Match - id
              */
@@ -359,15 +366,15 @@ class Nevobo_Beheer_Object_Types
                 ),
             ),
             /** 
-             * Match - team home
+             * Match - team a
              */
             array(
                 'post_type' => 'nevobo-match',
-                'meta_key' => 'nevobo-match-team-home',
+                'meta_key' => 'nevobo-match-team-a',
                 'args' => array(
                     // 'object_subtype' => '',
                     'type' => 'string',
-                    'description' => __('Het thuisteam van de wedstrijd.', $this->plugin_slug),
+                    'description' => __('Het eerste team van de wedstrijd.', $this->plugin_slug),
                     'single' => true,
                     'default' => '',
                     // 'sanitize_callback' => function(){},
@@ -376,17 +383,51 @@ class Nevobo_Beheer_Object_Types
                 ),
             ),
             /**
-             * Match - team away
+             * Match - team b
              */
             array(
                 'post_type' => 'nevobo-match',
-                'meta_key' => 'nevobo-match-team-away',
+                'meta_key' => 'nevobo-match-team-b',
                 'args' => array(
                     // 'object_subtype' => '',
                     'type' => 'string',
-                    'description' => __('Het uitteam van de wedstrijd.', $this->plugin_slug),
+                    'description' => __('Het tweede team van de wedstrijd.', $this->plugin_slug),
                     'single' => true,
                     'default' => '',
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Match - result
+             */
+            array(
+                'post_type' => 'nevobo-match',
+                'meta_key' => 'nevobo-match-result',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'array',
+                    'description' => __('Het resultaat van de wedstrijd.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => array(), // array('sets-a' => 0, 'sets-b' => 0 ),
+                    // 'sanitize_callback' => function(){},
+                    // 'auth_callback' => function(){},
+                    'show_in_rest' => true,
+                ),
+            ),
+            /**
+             * Match - setstanden
+             */
+            array(
+                'post_type' => 'nevobo-match',
+                'meta_key' => 'nevobo-match-set-scores',
+                'args' => array(
+                    // 'object_subtype' => '',
+                    'type' => 'array',
+                    'description' => __('De setstanden van de wedstrijd.', $this->plugin_slug),
+                    'single' => true,
+                    'default' => array(),
                     // 'sanitize_callback' => function(){},
                     // 'auth_callback' => function(){},
                     'show_in_rest' => true,
@@ -395,13 +436,30 @@ class Nevobo_Beheer_Object_Types
             /**
              * Match - team type
              */
+            // array(
+            //     'post_type' => 'nevobo-match',
+            //     'meta_key' => 'nevobo-match-team-type',
+            //     'args' => array(
+            //         // 'object_subtype' => '',
+            //         'type' => 'string',
+            //         'description' => __('Het type van de teams van de wedstrijd.', $this->plugin_slug),
+            //         'single' => true,
+            //         'default' => '',
+            //         // 'sanitize_callback' => function(){},
+            //         // 'auth_callback' => function(){},
+            //         'show_in_rest' => true,
+            //     ),
+            // ),
+            /**
+             * Match - team link
+             */
             array(
                 'post_type' => 'nevobo-match',
-                'meta_key' => 'nevobo-match-team-type',
+                'meta_key' => 'nevobo-match-link',
                 'args' => array(
                     // 'object_subtype' => '',
                     'type' => 'string',
-                    'description' => __('Het type van de teams van de wedstrijd.', $this->plugin_slug),
+                    'description' => __('De link van de wedstrijd.', $this->plugin_slug),
                     'single' => true,
                     'default' => '',
                     // 'sanitize_callback' => function(){},
