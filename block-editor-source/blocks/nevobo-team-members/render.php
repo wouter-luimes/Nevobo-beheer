@@ -20,7 +20,7 @@
 			}
 		} ?>
 	</ul>
-	<span>Staf:</span>
+	<span>Staf:</span> <!-- Begeleiders -->
 	<ul style="list-style-type: none">
 		<?php foreach ($attributes['teamMembers'] as $team_member) {
 			if (in_array($team_member['role'], array('coach-en-trainer', 'coach', 'trainer'))) {
