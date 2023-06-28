@@ -18,19 +18,19 @@ export default function Edit({ attributes, setAttributes }) {
 	 * An array of team member role options for the select control element.
 	 */
 	const teamMemberRoleOptions = [
-		{ value: 'speler', label: 'Speler' },
-		{ value: 'aanvoerder', label: 'Aanvoerder' },
-		{ value: 'libero', label: 'Libero' },
-		{ value: 'mee-trainer', label: 'Mee-trainer' },
-		{ value: 'coach-en-trainer', label: 'Coach & Trainer' },
-		{ value: 'coach', label: 'Coach' },
-		{ value: 'assistent-coach', label: 'Assistent Coach' },
-		{ value: 'trainer', label: 'Trainer' },
-		{ value: 'assistent-trainer', label: 'Assistent Trainer' },
-		// 	{ value: 'arts', label: 'Arts' },
-		// 	{ value: 'verzorger', label: 'Verzorger' },
-		// 	{ value: 'fysiotherapeut', label: 'Fysiotherapeut' },
-		// 	{ value: 'manager', label: 'Manager' },
+		{ value: 'player', label: __('Speler', 'nevobo-beheer') },
+		{ value: 'captain', label: __('Aanvoerder', 'nevobo-beheer') },
+		{ value: 'libero', label: __('Libero', 'nevobo-beheer') },
+		{ value: 'trainee', label: __('Mee-trainer', 'nevobo-beheer') },
+		{ value: 'coach-trainer', label: __('Coach & trainer', 'nevobo-beheer') },
+		{ value: 'coach', label: __('Coach', 'nevobo-beheer') },
+		{ value: 'assistant-coach', label: __('Assistent-coach', 'nevobo-beheer') },
+		{ value: 'trainer', label: __('Trainer', 'nevobo-beheer') },
+		{ value: 'assistant-trainer', label: __('Assistent-trainer', 'nevobo-beheer') },
+		// { value: 'doctor', label: __('Arts', 'nevobo-beheer') },
+		// { value: 'caretaker', label: __('Verzorger', 'nevobo-beheer') },
+		// { value: 'physiotherapist', label: __('Fysiotherapeut', 'nevobo-beheer') },
+		// { value: 'manager', label: __('Manager', 'nevobo-beheer') },
 	];
 
 	/**
@@ -80,7 +80,7 @@ export default function Edit({ attributes, setAttributes }) {
 	 * @return {boolean} - If the role is a competition player.
 	 */
 	const isCompetitionPlayer = (role) => {
-		return ['speler', 'aanvoerder', 'libero'].includes(String(role));
+		return ['player', 'captain', 'libero'].includes(String(role));
 	};
 
 	/**
@@ -146,7 +146,7 @@ export default function Edit({ attributes, setAttributes }) {
 	 * A helper function to add a team member.
 	 */
 	const addTeamMember = () => {
-		let newTeamMembers = attributes.teamMembers.concat([{ number: getHighestTeamMemberNumber() + 1, name: '', role: 'speler' }]);
+		let newTeamMembers = attributes.teamMembers.concat([{ number: getHighestTeamMemberNumber() + 1, name: '', role: 'player' }]);
 		setAttributes({ teamMembers: newTeamMembers });
 	};
 
@@ -168,10 +168,12 @@ export default function Edit({ attributes, setAttributes }) {
 			// sort competition players on their number first, then on their name
 			...attributes.teamMembers.filter((member) => isCompetitionPlayer(member.role)).sort((a, b) => a.number !== b.number ? a.number - b.number : a.name.localeCompare(b.name)),
 			// sort the other members based on their name
-			...attributes.teamMembers.filter((member) => member.role === 'mee-trainer').sort((a, b) => a.name > b.name ? 1 : -1),
-			...attributes.teamMembers.filter((member) => member.role === 'coach-en-trainer').sort((a, b) => a.name > b.name ? 1 : -1),
+			...attributes.teamMembers.filter((member) => member.role === 'trainee').sort((a, b) => a.name > b.name ? 1 : -1),
+			...attributes.teamMembers.filter((member) => member.role === 'coach-trainer').sort((a, b) => a.name > b.name ? 1 : -1),
 			...attributes.teamMembers.filter((member) => member.role === 'coach').sort((a, b) => a.name > b.name ? 1 : -1),
+			...attributes.teamMembers.filter((member) => member.role === 'assistant-coach').sort((a, b) => a.name > b.name ? 1 : -1),
 			...attributes.teamMembers.filter((member) => member.role === 'trainer').sort((a, b) => a.name > b.name ? 1 : -1),
+			...attributes.teamMembers.filter((member) => member.role === 'assistant-trainer').sort((a, b) => a.name > b.name ? 1 : -1),
 		];
 		setAttributes({ teamMembers: newTeamMembers });
 	};
@@ -183,7 +185,7 @@ export default function Edit({ attributes, setAttributes }) {
 		<div {...useBlockProps()}>
 			<Placeholder
 				label={__('Teamleden', 'nevobo-beheer')}
-				icon='list-view'
+				icon='editor-ul'
 				instructions={__('Voer hier (indien van toepassing) het nummer, de naam en de rol van alle teamleden in.', 'nevobo-beheer')}
 				isColumnLayout={true}
 			>

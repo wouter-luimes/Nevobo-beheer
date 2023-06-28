@@ -5,7 +5,7 @@
 	"version": "1.0.0",
 	"title": "Teamleden",
 	"category": "widgets",
-	"icon": "list-view",
+	"icon": "editor-ul",
 	"description": "Maak een lijst met teamleden.",
 	"supports": {
 		"html": false,
@@ -33,11 +33,12 @@
 				{
 					"number": 1,
 					"name": null,
-					"role": "speler"
+					"role": "player"
 				}
 			]
 		}
 	},
 	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
 	"render": "file:./render.php"
 }
